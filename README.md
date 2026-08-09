@@ -125,7 +125,7 @@ fails the PR rather than the deploy.
 
 ## Releasing
 
-CI runs lint, typecheck, tests and build on Node 18/20/22, then packs the tarball and
+CI runs lint, typecheck, tests and build on Node 22/24, then packs the tarball and
 asserts every advertised entry point is actually inside it.
 
 To publish, bump the version, tag it, and push the tag:

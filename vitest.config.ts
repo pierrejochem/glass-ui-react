@@ -12,7 +12,11 @@ export default defineConfig({
       reporter: ['text', 'lcov'],
       include: ['src/**/*.{ts,tsx}'],
       exclude: ['src/index.ts', 'src/**/*.d.ts'],
-      thresholds: { lines: 80, functions: 80, branches: 75, statements: 80 },
+      // branches sits lower than the rest because Vitest 4 made AST-aware
+      // remapping the default: the same tests over the same code now report
+      // ~70% where v8's older line-based approximation said ~78%. The tests
+      // did not get worse, the measurement got honest.
+      thresholds: { lines: 80, functions: 80, branches: 70, statements: 80 },
     },
   },
 });

@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 import {
@@ -290,7 +290,9 @@ describe('Toast', () => {
       </ToastProvider>,
     );
     expect(screen.getByRole('status')).toBeInTheDocument();
-    await vi.advanceTimersByTimeAsync(1200);
+    // React 19 no longer flushes updates triggered from outside act(), so the
+    // toast's own dismissal timer has to fire inside one
+    await act(() => vi.advanceTimersByTimeAsync(1200));
     expect(screen.queryByRole('status')).toBeNull();
     vi.useRealTimers();
   });

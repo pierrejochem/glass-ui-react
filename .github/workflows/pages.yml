@@ -34,7 +34,7 @@ jobs:
 
       - uses: actions/setup-node@v7
         with:
-          node-version: 20
+          node-version: 22
 
       # No npm ci: the site is one HTML file plus the stylesheet, and the build
       # script uses nothing outside node:*

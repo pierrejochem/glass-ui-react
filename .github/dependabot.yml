@@ -50,6 +50,15 @@ updates:
         applies-to: security-updates
         patterns: ['*']
 
+    ignore:
+      # TypeScript 7 typechecks this codebase fine and tsup emits working JS on
+      # it, but tsup's bundled rollup-plugin-dts calls TS internals that 7
+      # removed, so `npm run build` dies before writing a single .d.ts. Nothing
+      # to fix on our side. Delete this once tsup ships a dts pipeline that
+      # understands TS 7, then take the major.
+      - dependency-name: typescript
+        update-types: [version-update:semver-major]
+
     # Majors stay ungrouped and land one PR each: eslint 9 and vitest 3 are
     # migrations with their own config changes, not routine bumps. The one
     # exception is React, grouped above — a React 19 PR that bumps all four
