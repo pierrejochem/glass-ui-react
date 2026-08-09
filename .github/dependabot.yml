@@ -1,0 +1,80 @@
+version: 2
+
+updates:
+  # ---------------------------------------------------------------- npm ----
+  # Everything here is a devDependency: the published package has no runtime
+  # dependencies at all, only react/react-dom as peers. So a bad bump can break
+  # the build or the tests, but it can never reach anyone who installed us.
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '06:00'
+      timezone: Europe/Amsterdam
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+    commit-message:
+      prefix: deps
+      prefix-development: deps-dev
+      include: scope
+
+    groups:
+      # One PR a week for the safe stuff. CI runs the full matrix on it, so
+      # this is either green and mergeable or it tells you exactly what broke.
+      dev-minor:
+        applies-to: version-updates
+        patterns: ['*']
+        exclude-patterns:
+          - react
+          - react-dom
+          - '@types/react'
+          - '@types/react-dom'
+        update-types:
+          - minor
+          - patch
+
+      # React moves as a set or not at all — bumping @types/react alone against
+      # an older react is how you get type errors that describe nothing real.
+      react:
+        applies-to: version-updates
+        patterns:
+          - react
+          - react-dom
+          - '@types/react'
+          - '@types/react-dom'
+
+      # Security fixes arrive as their own PRs, grouped so one merge clears them
+      security:
+        applies-to: security-updates
+        patterns: ['*']
+
+    # Majors stay ungrouped and land one PR each: eslint 9 and vitest 3 are
+    # migrations with their own config changes, not routine bumps. The one
+    # exception is React, grouped above — a React 19 PR that bumps all four
+    # packages together and goes green is the cheapest possible proof that the
+    # library supports it. The `react >= 18` peer range needs no protecting:
+    # Dependabot only rewrites a range that excludes the new version, and that
+    # one already allows everything above 18.
+
+  # ------------------------------------------------------- github actions ----
+  # The workflows pin actions by major tag, so this is what surfaces things
+  # like the Node 20 runtime deprecation currently warning on every run.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '06:00'
+      timezone: Europe/Amsterdam
+    open-pull-requests-limit: 3
+    labels:
+      - dependencies
+      - github-actions
+    commit-message:
+      prefix: ci
+      include: scope
+    groups:
+      actions:
+        patterns: ['*']
