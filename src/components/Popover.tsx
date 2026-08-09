@@ -206,7 +206,9 @@ export function HoverCard({
   ...rest
 }: HoverCardProps) {
   const [open, setOpen] = React.useState(false);
-  const timer = React.useRef<ReturnType<typeof setTimeout>>();
+  // React 19 dropped the argument-less useRef overload, so the initial value
+  // is now explicit rather than implied undefined
+  const timer = React.useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   const schedule = (next: boolean, delay: number) => {
     clearTimeout(timer.current);
