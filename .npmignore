@@ -1,0 +1,9 @@
+src
+test
+docs
+scripts
+_site
+.github
+coverage
+*.config.ts
+.eslintrc.cjs

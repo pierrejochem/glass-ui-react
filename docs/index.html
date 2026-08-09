@@ -1,0 +1,2874 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>liquid-glass-ui — documentation</title>
+<meta name="description" content="Complete component documentation for liquid-glass-ui: every component, prop, and type." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+
+<!-- the library's own stylesheet: every preview below is the real material -->
+<link rel="stylesheet" href="../src/styles/liquid.css" />
+
+<style>
+/* ============================================================
+   docs chrome — every selector here is prefixed d- so it can
+   never collide with a library class name
+   ============================================================ */
+:root{
+  --d-nav:262px;
+  --d-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+body{font-family:"Manrope",ui-sans-serif,system-ui,sans-serif}
+
+.d-shell{position:relative;z-index:1;display:grid;grid-template-columns:var(--d-nav) minmax(0,1fr)}
+
+/* ---------- sidebar ---------- */
+.d-nav{
+  position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;
+  padding:26px 18px 60px;
+  border-right:1px solid var(--hair);
+  scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--ink) 22%,transparent) transparent;
+}
+.d-nav::-webkit-scrollbar{width:8px}
+.d-nav::-webkit-scrollbar-thumb{background:color-mix(in srgb,var(--ink) 20%,transparent);border-radius:99px;border:2px solid transparent;background-clip:content-box}
+.d-brand{display:flex;align-items:center;gap:11px;margin:0 0 4px;padding:0 10px}
+.d-brand .d-dot{
+  width:26px;height:26px;border-radius:9px;flex:none;
+  background:linear-gradient(158deg,color-mix(in srgb,var(--sleep) 55%,#fff),var(--sleep) 60%,color-mix(in srgb,var(--sleep) 75%,#000));
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.5),0 0 18px -2px color-mix(in srgb,var(--sleep) 70%,transparent);
+}
+.d-brand b{font-size:14.5px;font-weight:800;letter-spacing:-.02em}
+.d-ver{margin:0 0 18px;padding:0 10px 0 47px;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+.d-navgroup{margin:0 0 4px;padding:14px 10px 6px;font-size:9.5px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft)}
+.d-nav a{
+  display:block;padding:7px 10px;border-radius:12px;text-decoration:none;
+  font-size:13px;font-weight:600;color:var(--ink-soft);
+  transition:background .18s var(--ease),color .18s var(--ease);
+}
+.d-nav a:hover{color:var(--ink);background:color-mix(in srgb,var(--sleep) 11%,transparent)}
+.d-nav a.on{color:var(--ink);background:color-mix(in srgb,var(--sleep) 16%,transparent)}
+.d-nav a code{font-family:var(--d-mono);font-size:12px;font-weight:600}
+
+/* ---------- main ---------- */
+.d-main{min-width:0;padding:34px 40px 140px;max-width:1000px}
+.d-top{display:flex;align-items:flex-start;gap:18px;flex-wrap:wrap;margin-bottom:34px}
+.d-top .d-titles{flex:1;min-width:260px}
+.d-h1{
+  margin:0;font-weight:800;
+  font-size:clamp(32px,4.6vw,48px);line-height:1.04;letter-spacing:-.035em;
+}
+.d-sub{margin:12px 0 0;font-size:15.5px;line-height:1.6;color:var(--ink-soft);max-width:60ch}
+
+.d-sec{scroll-margin-top:24px;margin:0 0 26px}
+.d-group{
+  display:flex;align-items:baseline;gap:14px;margin:62px 0 22px;
+  padding-top:22px;border-top:1px solid var(--hair);scroll-margin-top:20px;
+}
+.d-group:first-of-type{border-top:0;padding-top:0;margin-top:38px}
+.d-group h2{margin:0;font-size:11px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-soft)}
+.d-group p{margin:0;font-size:13px;color:var(--ink-soft);opacity:.8}
+
+.d-sec h3{
+  margin:0 0 6px;font-size:23px;font-weight:800;letter-spacing:-.025em;
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+}
+.d-sec h3 .d-tag{
+  font-family:var(--d-mono);font-size:10px;font-weight:600;letter-spacing:.04em;
+  padding:4px 9px;border-radius:999px;color:var(--ink-soft);
+  background:color-mix(in srgb,var(--ink) 8%,transparent);
+  text-transform:none;
+}
+.d-lead{margin:0 0 16px;font-size:14.5px;line-height:1.68;color:var(--ink-soft);max-width:72ch}
+.d-lead code,.d-note code,.d-props code,td code{
+  font-family:var(--d-mono);font-size:.88em;font-weight:600;
+  padding:2px 6px;border-radius:7px;color:var(--ink);
+  background:color-mix(in srgb,var(--ink) 9%,transparent);
+}
+
+/* ---------- preview slab ---------- */
+.d-prev{
+  position:relative;padding:26px 24px;border-radius:26px;margin:0 0 14px;
+  background:var(--well);border:1px solid var(--plate-line);
+  box-shadow:inset 0 1px 0 var(--plate-line),0 24px 34px -34px var(--plate-shadow);
+}
+.d-prev.d-tall{min-height:280px}
+.d-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.d-col{display:grid;gap:14px}
+.d-grid2{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.d-cap{
+  margin:0 0 12px;font-size:9.5px;font-weight:800;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--ink-soft);
+}
+.d-w280{width:min(280px,100%)}
+.d-w320{width:min(320px,100%)}
+
+/* ---------- code ---------- */
+.d-code{
+  position:relative;margin:0 0 16px;padding:16px 18px;border-radius:20px;overflow-x:auto;
+  background:color-mix(in srgb,var(--ink) 7%,transparent);
+  border:1px solid var(--hair);
+}
+.d-code pre{margin:0}
+.d-code code{
+  font-family:var(--d-mono);font-size:12.5px;line-height:1.75;font-weight:500;
+  color:var(--ink);white-space:pre;
+}
+.d-copy{
+  position:absolute;top:9px;right:9px;appearance:none;border:0;cursor:pointer;
+  font:inherit;font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+  padding:7px 11px;border-radius:999px;color:var(--ink-soft);
+  background:color-mix(in srgb,var(--ink) 8%,transparent);
+  opacity:0;transition:opacity .2s var(--ease),color .2s var(--ease);
+}
+.d-code:hover .d-copy,.d-copy:focus-visible{opacity:1}
+.d-copy:hover{color:var(--ink)}
+.d-tok-k{color:color-mix(in srgb,var(--sleep) 74%,var(--ink))}
+.d-tok-s{color:color-mix(in srgb,var(--ok) 72%,var(--ink))}
+.d-tok-c{color:var(--ink-soft);font-style:italic}
+.d-tok-t{color:color-mix(in srgb,var(--personal) 70%,var(--ink))}
+
+/* ---------- props table ---------- */
+.d-props{margin:0 0 8px;overflow-x:auto;border-radius:18px;border:1px solid var(--hair)}
+.d-props table{width:100%;min-width:520px;border-collapse:collapse;font-size:13px}
+.d-props thead th{
+  padding:11px 14px;text-align:left;vertical-align:middle;
+  font-size:9.5px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ink-soft);background:color-mix(in srgb,var(--ink) 5%,transparent);
+  border-bottom:1px solid var(--hair);width:auto;
+}
+.d-props tbody td{
+  padding:11px 14px;border-top:1px solid var(--hair);vertical-align:top;
+  font-weight:500;color:var(--ink-soft);line-height:1.55;
+}
+.d-props tbody tr:first-child td{border-top:0}
+.d-props tbody tr:hover td{background:color-mix(in srgb,var(--sleep) 6%,transparent)}
+.d-props td:first-child{white-space:nowrap;color:var(--ink);font-weight:700;font-family:var(--d-mono);font-size:12px}
+.d-props td:nth-child(2){font-family:var(--d-mono);font-size:11.5px;color:color-mix(in srgb,var(--sleep) 62%,var(--ink))}
+.d-props td:nth-child(3){font-family:var(--d-mono);font-size:11.5px;white-space:nowrap}
+.d-req{color:var(--dnd);font-weight:800}
+
+.d-note{
+  margin:0 0 16px;padding:14px 18px;border-radius:18px;
+  font-size:13.5px;line-height:1.65;color:var(--ink-soft);
+  background:color-mix(in srgb,var(--sleep) 9%,transparent);
+  border-left:2px solid color-mix(in srgb,var(--sleep) 60%,transparent);
+}
+.d-note.d-warn{
+  background:color-mix(in srgb,var(--personal) 11%,transparent);
+  border-left-color:color-mix(in srgb,var(--personal) 70%,transparent);
+}
+.d-note b{color:var(--ink)}
+
+.d-toolbar{display:flex;gap:8px;align-items:center}
+.d-themebtn{
+  appearance:none;border:0;cursor:pointer;font:inherit;
+  font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+  padding:13px 18px;border-radius:999px;color:var(--pill-ink);
+  background:linear-gradient(158deg,var(--pill-top),var(--pill-mid) 55%,var(--pill-bot));
+  box-shadow:inset 0 2px 2px var(--gloss),0 14px 22px -18px var(--cast);
+  -webkit-backdrop-filter:blur(var(--blur)) saturate(var(--sat));
+  backdrop-filter:blur(var(--blur)) saturate(var(--sat));
+}
+.d-navtoggle{display:none}
+
+@media (max-width:960px){
+  .d-shell{grid-template-columns:1fr}
+  .d-nav{
+    position:fixed;z-index:200;left:0;top:0;width:280px;
+    background:var(--panel);backdrop-filter:blur(22px);
+    transform:translateX(-102%);transition:transform .38s var(--ease);
+  }
+  .d-nav.open{transform:none}
+  .d-main{padding:20px 20px 120px}
+  .d-navtoggle{display:inline-grid}
+}
+@media (prefers-reduced-motion:reduce){.d-nav{transition:none}}
+</style>
+</head>
+<body>
+
+<div class="ambient" aria-hidden="true"><span class="o1"></span><span class="o2"></span><span class="o3"></span></div>
+
+<div class="d-shell">
+
+<!-- ============================ sidebar ============================ -->
+<nav class="d-nav" id="dNav" aria-label="Documentation">
+  <p class="d-brand"><span class="d-dot"></span><b>liquid-glass-ui</b></p>
+  <p class="d-ver">v0.1.0 · 30 components</p>
+
+  <p class="d-navgroup">Start</p>
+  <a href="#install">Installation</a>
+  <a href="#quickstart">Quick start</a>
+  <a href="#controlled">Controlled state</a>
+  <a href="#theming">Theming &amp; tokens</a>
+  <a href="#glass">A note on glass</a>
+  <a href="#a11y">Accessibility</a>
+
+  <p class="d-navgroup">Theme</p>
+  <a href="#ThemeProvider"><code>ThemeProvider</code></a>
+  <a href="#useTheme"><code>useTheme</code></a>
+  <a href="#AmbientLight"><code>AmbientLight</code></a>
+
+  <p class="d-navgroup">Actions</p>
+  <a href="#Button"><code>Button</code></a>
+  <a href="#IconButton"><code>IconButton</code></a>
+  <a href="#Toggle"><code>Toggle</code></a>
+  <a href="#ToggleGroup"><code>ToggleGroup</code></a>
+
+  <p class="d-navgroup">Selection</p>
+  <a href="#Switch"><code>Switch</code></a>
+  <a href="#Checkbox"><code>Checkbox</code></a>
+  <a href="#RadioGroup"><code>RadioGroup</code></a>
+  <a href="#Segmented"><code>Segmented</code></a>
+  <a href="#Select"><code>Select</code></a>
+  <a href="#Slider"><code>Slider</code></a>
+
+  <p class="d-navgroup">Text</p>
+  <a href="#Input"><code>Input</code></a>
+  <a href="#Textarea"><code>Textarea</code></a>
+
+  <p class="d-navgroup">Disclosure</p>
+  <a href="#Tabs"><code>Tabs</code></a>
+  <a href="#Accordion"><code>Accordion</code></a>
+  <a href="#Collapsible"><code>Collapsible</code></a>
+
+  <p class="d-navgroup">Overlays</p>
+  <a href="#Popover"><code>Popover</code></a>
+  <a href="#DropdownMenu"><code>DropdownMenu</code></a>
+  <a href="#Tooltip"><code>Tooltip</code></a>
+  <a href="#HoverCard"><code>HoverCard</code></a>
+  <a href="#Dialog"><code>Dialog</code></a>
+  <a href="#AlertDialog"><code>AlertDialog</code></a>
+  <a href="#Toast"><code>ToastProvider</code></a>
+
+  <p class="d-navgroup">Display</p>
+  <a href="#Card"><code>Card</code></a>
+  <a href="#Badge"><code>Badge</code></a>
+  <a href="#Avatar"><code>Avatar</code></a>
+  <a href="#AvatarStack"><code>AvatarStack</code></a>
+  <a href="#AspectRatio"><code>AspectRatio</code></a>
+  <a href="#Separator"><code>Separator</code></a>
+  <a href="#ScrollArea"><code>ScrollArea</code></a>
+  <a href="#Progress"><code>Progress</code></a>
+
+  <p class="d-navgroup">Data</p>
+  <a href="#DataTable"><code>DataTable</code></a>
+  <a href="#DatePicker"><code>DatePicker</code></a>
+
+  <p class="d-navgroup">Signature</p>
+  <a href="#ModeToggle"><code>ModeToggle</code></a>
+  <a href="#ModeRack"><code>ModeRack</code></a>
+
+  <p class="d-navgroup">Utilities</p>
+  <a href="#cx"><code>cx</code></a>
+  <a href="#useControllableState"><code>useControllableState</code></a>
+  <a href="#Accent"><code>Accent</code></a>
+</nav>
+
+<!-- ============================ main ============================ -->
+<main class="d-main">
+
+  <header class="d-top">
+    <div class="d-titles">
+      <h1 class="d-h1">Documentation</h1>
+      <p class="d-sub">
+        A React component library built on one material: translucent glass that lights up
+        when it's on. Things you press are raised; things you pour text into are recessed.
+        That one rule is what makes 30 components read as a single object.
+      </p>
+    </div>
+    <div class="d-toolbar">
+      <button class="iconbtn d-navtoggle" id="dNavToggle" aria-label="Open navigation" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <button class="d-themebtn" id="dTheme" aria-pressed="true">Dark</button>
+    </div>
+  </header>
+
+  <div class="d-note">
+    <b>Every preview on this page is live.</b> The panels below load the library's own
+    stylesheet (<code>src/styles/liquid.css</code>) and use the exact markup the React
+    components render, so what you see is the real material — not a screenshot.
+  </div>
+
+  <!-- ==================== START ==================== -->
+  <div class="d-group" id="start"><h2>Start</h2><p>Install, render, own the state.</p></div>
+
+  <section class="d-sec" id="install">
+    <h3>Installation</h3>
+    <p class="d-lead">
+      One package, one stylesheet. React 18 or newer is a peer dependency — the library
+      ships ESM and CJS builds plus type declarations.
+    </p>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code>npm install liquid-glass-ui</code></pre>
+    </div>
+    <p class="d-lead">Import the stylesheet exactly once, at the root of your app:</p>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code><span class="d-tok-k">import</span> <span class="d-tok-s">'liquid-glass-ui/styles.css'</span>;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Entry point</th><th>Path</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>import</td><td>./dist/index.js</td><td>ESM build</td></tr>
+          <tr><td>require</td><td>./dist/index.cjs</td><td>CommonJS build</td></tr>
+          <tr><td>types</td><td>./dist/index.d.ts</td><td>Bundled declarations</td></tr>
+          <tr><td>./styles.css</td><td>./dist/styles/liquid.css</td><td>The single stylesheet</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="d-sec" id="quickstart">
+    <h3>Quick start</h3>
+    <p class="d-lead">
+      <code>ThemeProvider</code> writes <code>data-theme</code> onto <code>&lt;html&gt;</code>;
+      <code>ToastProvider</code> mounts the toast viewport. Both are optional, but wrapping
+      the app in them once is what everything else assumes.
+    </p>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code><span class="d-tok-k">import</span> { ThemeProvider, ToastProvider, ModeRack, ModeToggle } <span class="d-tok-k">from</span> <span class="d-tok-s">'liquid-glass-ui'</span>;
+<span class="d-tok-k">import</span> <span class="d-tok-s">'liquid-glass-ui/styles.css'</span>;
+
+<span class="d-tok-k">export function</span> <span class="d-tok-t">App</span>() {
+  <span class="d-tok-k">return</span> (
+    &lt;<span class="d-tok-t">ThemeProvider</span> defaultTheme=<span class="d-tok-s">"dark"</span>&gt;
+      &lt;<span class="d-tok-t">ToastProvider</span>&gt;
+        &lt;<span class="d-tok-t">ModeRack</span>&gt;
+          &lt;<span class="d-tok-t">ModeToggle</span> name=<span class="d-tok-s">"Sleep"</span> accent=<span class="d-tok-s">"sleep"</span> onLabel=<span class="d-tok-s">"Dims at 10:30"</span> /&gt;
+          &lt;<span class="d-tok-t">ModeToggle</span> name=<span class="d-tok-s">"Do not disturb"</span> accent=<span class="d-tok-s">"dnd"</span> onLabel=<span class="d-tok-s">"Calls silenced"</span> /&gt;
+          &lt;<span class="d-tok-t">ModeToggle</span> name=<span class="d-tok-s">"Personal"</span> accent=<span class="d-tok-s">"personal"</span> onLabel=<span class="d-tok-s">"Work apps hidden"</span> /&gt;
+        &lt;/<span class="d-tok-t">ModeRack</span>&gt;
+      &lt;/<span class="d-tok-t">ToastProvider</span>&gt;
+    &lt;/<span class="d-tok-t">ThemeProvider</span>&gt;
+  );
+}</code></pre>
+    </div>
+  </section>
+
+  <section class="d-sec" id="controlled">
+    <h3>Controlled state</h3>
+    <p class="d-lead">
+      Every stateful component works both ways. Leave the value off and the component keeps
+      its own; pass one and you own it. Internally that is <code>useControllableState</code> —
+      passing <code>undefined</code> for the value is what makes a component uncontrolled,
+      so don't flip between the two at runtime.
+    </p>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code><span class="d-tok-c">// uncontrolled — the component remembers</span>
+&lt;<span class="d-tok-t">Switch</span> label=<span class="d-tok-s">"Dim the screen"</span> defaultChecked /&gt;
+
+<span class="d-tok-c">// controlled — you remember</span>
+&lt;<span class="d-tok-t">Switch</span> label=<span class="d-tok-s">"Dim the screen"</span> checked={on} onCheckedChange={setOn} /&gt;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Pattern</th><th>Value prop</th><th>Default prop</th><th>Change handler</th></tr></thead>
+        <tbody>
+          <tr><td>Checked</td><td>checked</td><td>defaultChecked</td><td>onCheckedChange(boolean)</td></tr>
+          <tr><td>Pressed</td><td>pressed</td><td>defaultPressed</td><td>onPressedChange(boolean)</td></tr>
+          <tr><td>Value</td><td>value</td><td>defaultValue</td><td>onValueChange(value)</td></tr>
+          <tr><td>Open</td><td>open</td><td>defaultOpen</td><td>onOpenChange(boolean)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="d-sec" id="theming">
+    <h3>Theming &amp; tokens</h3>
+    <p class="d-lead">
+      The stylesheet is driven entirely by custom properties. Override them anywhere in the
+      cascade — on <code>:root</code>, on a subtree, or inline on a single component.
+      Dark mode is <code>data-theme="dark"</code> on any ancestor.
+    </p>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code><span class="d-tok-t">:root</span> {
+  <span class="d-tok-k">--sleep</span>: #3E7BFA;      <span class="d-tok-c">/* the three accents */</span>
+  <span class="d-tok-k">--dnd</span>: #FF3428;
+  <span class="d-tok-k">--personal</span>: #FFA51F;
+  <span class="d-tok-k">--blur</span>: 22px;          <span class="d-tok-c">/* how frosted the glass is */</span>
+  <span class="d-tok-k">--panel</span>: rgba(255, 255, 255, .88);
+}</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Token</th><th>Light</th><th>Dark</th><th>What it drives</th></tr></thead>
+        <tbody>
+          <tr><td>--sleep</td><td>#3E7BFA</td><td>#5B95FF</td><td>Blue accent, the default</td></tr>
+          <tr><td>--dnd</td><td>#FF3428</td><td>#FF4033</td><td>Red accent, danger</td></tr>
+          <tr><td>--personal</td><td>#FFA51F</td><td>#FFB23D</td><td>Amber accent, warning</td></tr>
+          <tr><td>--ok</td><td>#22A06B</td><td>#3ED9A0</td><td>Success tone</td></tr>
+          <tr><td>--accent</td><td colspan="2">var(--sleep)</td><td>Per-component accent; what <code>accent</code> sets</td></tr>
+          <tr><td>--bg-1 / --bg-2</td><td>#EFEDE9 / #DAD7D1</td><td>#1A1A1C / #070708</td><td>Page gradient</td></tr>
+          <tr><td>--ink / --ink-soft</td><td>#101012</td><td>#F2F1EF</td><td>Text, and its muted pair</td></tr>
+          <tr><td>--hair</td><td colspan="2">14–16% ink</td><td>Hairline rules and borders</td></tr>
+          <tr><td>--pill-top/mid/bot</td><td colspan="2">translucent whites</td><td>The raised-glass gradient</td></tr>
+          <tr><td>--well</td><td>5% ink</td><td>30% black</td><td>Recessed surfaces (inputs, tracks)</td></tr>
+          <tr><td>--panel</td><td>88% white</td><td>88% #141418</td><td>Menus, popovers, calendars</td></tr>
+          <tr><td>--panel-free</td><td>58% white</td><td>60% #141418</td><td>Dialogs and toasts</td></tr>
+          <tr><td>--blur / --sat</td><td>22px / 1.7</td><td>24px / 1.5</td><td>backdrop-filter strength</td></tr>
+          <tr><td>--gloss / --cast</td><td colspan="2">whites / shadows</td><td>Inner highlight, outer shadow</td></tr>
+          <tr><td>--glow-a / --glow-b</td><td>.55 / .22</td><td>.85 / .42</td><td>Halo and bloom intensity when lit</td></tr>
+          <tr><td>--r</td><td colspan="2">999px</td><td>The pill radius</td></tr>
+          <tr><td>--ease</td><td colspan="2">cubic-bezier(.2,.9,.24,1)</td><td>Every transition curve</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="d-lead">
+      Per component, pass <code>accent="sleep" | "dnd" | "personal"</code>, or set
+      <code>--accent</code> yourself. A few components take a raw CSS colour instead —
+      <code>accentColor</code> on <code>Slider</code>, <code>Select</code>,
+      <code>Progress</code>, <code>Avatar</code> and <code>Dialog</code>.
+    </p>
+  </section>
+
+  <section class="d-sec" id="glass">
+    <h3>A note on glass</h3>
+    <div class="d-note d-warn">
+      <b>backdrop-filter makes an element a backdrop root.</b> Anything nested inside it can
+      no longer blur its own siblings. That is why <code>Card</code> is translucent but not
+      blurred — so the menus and popovers inside it can frost what they cover. If you add
+      blur to your own containers, expect popovers inside them to stop frosting.
+    </div>
+    <p class="d-lead">
+      The same stacking rule is why <code>Card</code> accepts a <code>lifted</code> class:
+      each blurred card is its own stacking context, so a popover escaping upward needs the
+      whole card raised rather than just the panel.
+    </p>
+  </section>
+
+  <section class="d-sec" id="a11y">
+    <h3>Accessibility</h3>
+    <p class="d-lead">
+      Native elements wherever one exists — and where none exists, the ARIA pattern in full.
+      <code>prefers-reduced-motion</code> is respected throughout: every animation and
+      transition collapses to nothing.
+    </p>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Component</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td>Switch / Checkbox</td><td>Real <code>&lt;input type="checkbox"&gt;</code>, so keyboard and form submission come free. <code>role="switch"</code> on the former, <code>indeterminate</code> on the latter.</td></tr>
+          <tr><td>RadioGroup</td><td>Real radios in a <code>role="radiogroup"</code>; arrow keys are the browser's.</td></tr>
+          <tr><td>Dialog / AlertDialog</td><td>Wraps <code>&lt;dialog&gt;</code> — focus trapping, inertness and Escape are the platform's job. AlertDialog adds <code>role="alertdialog"</code>.</td></tr>
+          <tr><td>Tabs</td><td>Roving tab index; Arrow Left/Right moves selection and focus together.</td></tr>
+          <tr><td>Select / DropdownMenu</td><td>Arrow keys walk the list, Enter picks, Escape closes and restores focus to the trigger.</td></tr>
+          <tr><td>DatePicker</td><td>Arrows by day, Up/Down by week, PageUp/PageDown by month, Enter to pick. <code>aria-live</code> on the month title.</td></tr>
+          <tr><td>DataTable</td><td><code>aria-sort</code> on exactly one column; a tri-state header checkbox that goes indeterminate when a page is partly selected.</td></tr>
+          <tr><td>IconButton</td><td><code>aria-label</code> is a required prop — an icon button has no visible text to name it.</td></tr>
+          <tr><td>Tooltip</td><td>Pure CSS on hover <em>and</em> focus, wired to the child with <code>aria-describedby</code>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ==================== THEME ==================== -->
+  <div class="d-group" id="theme-group"><h2>Theme</h2><p>The provider, the hook, and the light behind the glass.</p></div>
+
+  <section class="d-sec" id="ThemeProvider">
+    <h3>ThemeProvider <span class="d-tag">context</span></h3>
+    <p class="d-lead">
+      Holds the current theme and writes it to <code>data-theme</code> on an element —
+      <code>&lt;html&gt;</code> unless you point it somewhere else. It renders no markup of
+      its own.
+    </p>
+    <div class="d-prev">
+      <p class="d-cap">Live — this whole page is the preview</p>
+      <div class="d-row">
+        <button class="push" data-theme-set="light">Light</button>
+        <button class="push" data-theme-set="dark">Dark</button>
+        <span class="badge"><i style="--bc:var(--sleep)"></i> data-theme = <b id="dThemeRead">dark</b></span>
+      </div>
+    </div>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code>&lt;<span class="d-tok-t">ThemeProvider</span> defaultTheme=<span class="d-tok-s">"dark"</span>&gt;
+  &lt;<span class="d-tok-t">App</span> /&gt;
+&lt;/<span class="d-tok-t">ThemeProvider</span>&gt;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>children <span class="d-req">*</span></td><td>ReactNode</td><td>—</td><td>Your app.</td></tr>
+          <tr><td>defaultTheme</td><td>'light' | 'dark'</td><td>'light'</td><td>Initial theme. Not reactive — use <code>setTheme</code> after mount.</td></tr>
+          <tr><td>target</td><td>HTMLElement | null</td><td>document.documentElement</td><td>The element that carries <code>data-theme</code>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="d-sec" id="useTheme">
+    <h3>useTheme <span class="d-tag">hook</span></h3>
+    <p class="d-lead">
+      Returns <code>{ theme, setTheme }</code>. Throws if called outside a
+      <code>ThemeProvider</code> — that is deliberate, a silent no-op theme toggle is worse
+      than a stack trace.
+    </p>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code><span class="d-tok-k">const</span> { theme, setTheme } = <span class="d-tok-t">useTheme</span>();
+
+&lt;<span class="d-tok-t">Button</span> onClick={() =&gt; <span class="d-tok-t">setTheme</span>(theme === <span class="d-tok-s">'dark'</span> ? <span class="d-tok-s">'light'</span> : <span class="d-tok-s">'dark'</span>)}&gt;
+  {theme === <span class="d-tok-s">'dark'</span> ? <span class="d-tok-s">'Lights on'</span> : <span class="d-tok-s">'Lights off'</span>}
+&lt;/<span class="d-tok-t">Button</span>&gt;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Returns</th><th>Type</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>theme</td><td>'light' | 'dark'</td><td>The current theme.</td></tr>
+          <tr><td>setTheme</td><td>(theme: Theme) =&gt; void</td><td>Switches it; the provider rewrites the attribute in an effect.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="d-sec" id="AmbientLight">
+    <h3>AmbientLight</h3>
+    <p class="d-lead">
+      Three drifting orbs behind the page, so the glass has something to refract. Takes no
+      props, renders <code>aria-hidden</code>, and sits at <code>z-index:0</code> behind
+      everything — it is already running behind this page.
+    </p>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code>&lt;<span class="d-tok-t">ThemeProvider</span>&gt;
+  &lt;<span class="d-tok-t">AmbientLight</span> /&gt;
+  &lt;<span class="d-tok-t">App</span> /&gt;
+&lt;/<span class="d-tok-t">ThemeProvider</span>&gt;</code></pre>
+    </div>
+    <div class="d-note">
+      The orbs are one blue, one red and one amber — the three accents. Their opacity comes
+      from <code>--orb</code> (.12 light, .17 dark), so dialling the whole effect down is a
+      one-line override.
+    </div>
+  </section>
+
+  <!-- ==================== ACTIONS ==================== -->
+  <div class="d-group" id="actions"><h2>Actions</h2><p>Things you press. All of them raised.</p></div>
+
+  <section class="d-sec" id="Button">
+    <h3>Button <span class="d-tag">forwardRef → button</span></h3>
+    <p class="d-lead">
+      A raised slab of glass. Extends every native button attribute, and defaults
+      <code>type</code> to <code>"button"</code> so it never submits a form by accident.
+    </p>
+    <div class="d-prev">
+      <p class="d-cap">Preview</p>
+      <div class="d-row">
+        <button class="push">Default</button>
+        <button class="push primary">Primary</button>
+        <button class="push danger">Danger</button>
+        <button class="push" disabled style="opacity:.45">Disabled</button>
+      </div>
+    </div>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code>&lt;<span class="d-tok-t">Button</span>&gt;Default&lt;/<span class="d-tok-t">Button</span>&gt;
+&lt;<span class="d-tok-t">Button</span> variant=<span class="d-tok-s">"primary"</span> onClick={save}&gt;Save changes&lt;/<span class="d-tok-t">Button</span>&gt;
+&lt;<span class="d-tok-t">Button</span> variant=<span class="d-tok-s">"danger"</span>&gt;Delete&lt;/<span class="d-tok-t">Button</span>&gt;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>variant</td><td>'default' | 'primary' | 'danger'</td><td>'default'</td><td><code>primary</code> lights up in the accent colour, <code>danger</code> in red.</td></tr>
+          <tr><td>type</td><td>'button' | 'submit' | 'reset'</td><td>'button'</td><td>Overridden deliberately — set it back to <code>submit</code> inside a form.</td></tr>
+          <tr><td>className</td><td>string</td><td>—</td><td>Appended after <code>push</code> and the variant class.</td></tr>
+          <tr><td>…rest</td><td>ButtonHTMLAttributes</td><td>—</td><td>Everything native, spread onto the element.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="d-sec" id="IconButton">
+    <h3>IconButton <span class="d-tag">forwardRef → button</span></h3>
+    <p class="d-lead">
+      A 52px circle for a single 24×24 glyph. <code>aria-label</code> is required by the
+      type, because an icon button has no visible text to name it. Pass
+      <code>pressed</code> to make it a toggle — it lights red.
+    </p>
+    <div class="d-prev">
+      <p class="d-cap">Preview — the last two toggle</p>
+      <div class="d-row">
+        <button class="iconbtn" aria-label="Search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>
+        </button>
+        <button class="iconbtn" aria-label="Add">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+        <button class="iconbtn" aria-label="Mute" aria-pressed="false" data-toggle>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="m16 9 5 6M21 9l-5 6"/></svg>
+        </button>
+        <button class="iconbtn" aria-label="Favourite" aria-pressed="true" data-toggle>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-9a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 4.6-7 9-7 9z"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code>&lt;<span class="d-tok-t">IconButton</span> aria-label=<span class="d-tok-s">"Search"</span>&gt;&lt;<span class="d-tok-t">SearchIcon</span> /&gt;&lt;/<span class="d-tok-t">IconButton</span>&gt;
+
+&lt;<span class="d-tok-t">IconButton</span>
+  aria-label=<span class="d-tok-s">"Mute"</span>
+  pressed={muted}
+  onClick={() =&gt; <span class="d-tok-t">setMuted</span>(!muted)}
+&gt;
+  &lt;<span class="d-tok-t">MuteIcon</span> /&gt;
+&lt;/<span class="d-tok-t">IconButton</span>&gt;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>aria-label <span class="d-req">*</span></td><td>string</td><td>—</td><td>Required by the type. There is no visible label to fall back on.</td></tr>
+          <tr><td>pressed</td><td>boolean</td><td>undefined</td><td>Sets <code>aria-pressed</code>. Leave it off for a plain action button — <code>undefined</code> omits the attribute entirely.</td></tr>
+          <tr><td>type</td><td>string</td><td>'button'</td><td>Same default as <code>Button</code>.</td></tr>
+          <tr><td>…rest</td><td>ButtonHTMLAttributes</td><td>—</td><td>Spread onto the element.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="d-note">
+      <code>IconButton</code> is not stateful — <code>pressed</code> is display only. Own the
+      boolean yourself, or reach for <code>Toggle</code>, which manages it.
+    </div>
+  </section>
+
+  <section class="d-sec" id="Toggle">
+    <h3>Toggle <span class="d-tag">forwardRef → button</span></h3>
+    <p class="d-lead">
+      A square 38px pill that stays pressed. Controlled or not, like everything else. Pass
+      <code>wide</code> when the label is text rather than an icon.
+    </p>
+    <div class="d-prev">
+      <p class="d-cap">Preview — click any of them</p>
+      <div class="d-row">
+        <button class="tgl" aria-pressed="true" data-toggle aria-label="Bold"><b>B</b></button>
+        <button class="tgl" aria-pressed="false" data-toggle aria-label="Italic"><i>I</i></button>
+        <button class="tgl wide" aria-pressed="false" data-toggle style="--accent:var(--dnd)">Danger accent</button>
+        <button class="tgl wide" aria-pressed="true" data-toggle style="--accent:var(--personal)">Personal accent</button>
+      </div>
+    </div>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code>&lt;<span class="d-tok-t">Toggle</span> aria-label=<span class="d-tok-s">"Bold"</span> defaultPressed&gt;&lt;<span class="d-tok-t">BoldIcon</span> /&gt;&lt;/<span class="d-tok-t">Toggle</span>&gt;
+
+&lt;<span class="d-tok-t">Toggle</span> wide accent=<span class="d-tok-s">"dnd"</span> pressed={live} onPressedChange={setLive}&gt;
+  Live
+&lt;/<span class="d-tok-t">Toggle</span>&gt;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>pressed</td><td>boolean</td><td>—</td><td>Pass to control it.</td></tr>
+          <tr><td>defaultPressed</td><td>boolean</td><td>false</td><td>Uncontrolled starting state.</td></tr>
+          <tr><td>onPressedChange</td><td>(pressed: boolean) =&gt; void</td><td>—</td><td>Fires before your own <code>onClick</code>.</td></tr>
+          <tr><td>accent</td><td>'sleep' | 'dnd' | 'personal'</td><td>'sleep'</td><td>The colour it lights up in.</td></tr>
+          <tr><td>wide</td><td>boolean</td><td>false</td><td>Auto-width pill for a text label instead of a 38px square.</td></tr>
+          <tr><td>…rest</td><td>ButtonHTMLAttributes</td><td>—</td><td>Minus <code>onChange</code>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="d-sec" id="ToggleGroup">
+    <h3>ToggleGroup</h3>
+    <p class="d-lead">
+      A row of toggles that share a value array. <code>type="multiple"</code> behaves like a
+      set of switches; <code>type="single"</code> like a segmented choice that can also be
+      empty — clicking the selected item clears it.
+    </p>
+    <div class="d-prev">
+      <p class="d-cap">Preview — multiple (left) and single (right)</p>
+      <div class="d-row" style="gap:26px">
+        <div class="tg" role="group" aria-label="Text style">
+          <button class="tgl" aria-pressed="true" data-toggle aria-label="Bold"><b>B</b></button>
+          <button class="tgl" aria-pressed="false" data-toggle aria-label="Italic"><i>I</i></button>
+          <button class="tgl" aria-pressed="true" data-toggle aria-label="Underline"><u>U</u></button>
+        </div>
+        <div class="tg" role="group" aria-label="Alignment" data-single>
+          <button class="tgl wide" aria-pressed="true">Left</button>
+          <button class="tgl wide" aria-pressed="false">Centre</button>
+          <button class="tgl wide" aria-pressed="false">Right</button>
+        </div>
+      </div>
+    </div>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code>&lt;<span class="d-tok-t">ToggleGroup</span>
+  aria-label=<span class="d-tok-s">"Text style"</span>
+  items={[
+    { value: <span class="d-tok-s">'bold'</span>, label: &lt;<span class="d-tok-t">B</span> /&gt;, <span class="d-tok-s">'aria-label'</span>: <span class="d-tok-s">'Bold'</span> },
+    { value: <span class="d-tok-s">'italic'</span>, label: &lt;<span class="d-tok-t">I</span> /&gt;, <span class="d-tok-s">'aria-label'</span>: <span class="d-tok-s">'Italic'</span> },
+  ]}
+  defaultValue={[<span class="d-tok-s">'bold'</span>]}
+  onValueChange={setStyles}
+/&gt;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>items <span class="d-req">*</span></td><td>ToggleGroupItem[]</td><td>—</td><td><code>{ value, label, 'aria-label'? }</code></td></tr>
+          <tr><td>type</td><td>'single' | 'multiple'</td><td>'multiple'</td><td><code>single</code> keeps at most one pressed, and allows none.</td></tr>
+          <tr><td>value</td><td>string[]</td><td>—</td><td>Always an array, even for <code>single</code>.</td></tr>
+          <tr><td>defaultValue</td><td>string[]</td><td>[]</td><td>Uncontrolled starting selection.</td></tr>
+          <tr><td>onValueChange</td><td>(value: string[]) =&gt; void</td><td>—</td><td>Called with the whole next array.</td></tr>
+          <tr><td>accent</td><td>Accent</td><td>'sleep'</td><td>Applied to every item.</td></tr>
+          <tr><td>wide</td><td>boolean</td><td>false</td><td>Applied to every item.</td></tr>
+          <tr><td>aria-label <span class="d-req">*</span></td><td>string</td><td>—</td><td>Names the <code>role="group"</code> wrapper.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ==================== SELECTION ==================== -->
+  <div class="d-group" id="selection"><h2>Selection</h2><p>Picking one thing, or several, or a number.</p></div>
+
+  <section class="d-sec" id="Switch">
+    <h3>Switch <span class="d-tag">forwardRef → input</span></h3>
+    <p class="d-lead">
+      A native checkbox with <code>role="switch"</code> in a glass track. The whole row is
+      the label, so the hit target is the full width — and keyboard, focus and form
+      submission are the browser's.
+    </p>
+    <div class="d-prev">
+      <p class="d-cap">Preview — all three accents</p>
+      <div class="d-col d-w320">
+        <label class="ctl"><input type="checkbox" role="switch" checked /><span class="lbl">Dim the screen</span><span class="sw" aria-hidden="true"></span></label>
+        <label class="ctl" style="--accent:var(--dnd)"><input type="checkbox" role="switch" /><span class="lbl">Silence calls</span><span class="sub">Until 8am</span><span class="sw" aria-hidden="true"></span></label>
+        <label class="ctl" style="--accent:var(--personal)"><input type="checkbox" role="switch" checked /><span class="lbl">Hide work apps</span><span class="sw" aria-hidden="true"></span></label>
+      </div>
+    </div>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code>&lt;<span class="d-tok-t">Switch</span> label=<span class="d-tok-s">"Dim the screen"</span> defaultChecked /&gt;
+
+&lt;<span class="d-tok-t">Switch</span>
+  label=<span class="d-tok-s">"Silence calls"</span>
+  hint=<span class="d-tok-s">"Until 8am"</span>
+  accent=<span class="d-tok-s">"dnd"</span>
+  checked={quiet}
+  onCheckedChange={setQuiet}
+/&gt;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>label <span class="d-req">*</span></td><td>ReactNode</td><td>—</td><td>The row's text. The whole row is clickable.</td></tr>
+          <tr><td>hint</td><td>ReactNode</td><td>—</td><td>Secondary text on the far side of the row.</td></tr>
+          <tr><td>accent</td><td>Accent</td><td>'sleep'</td><td>Colour of the lit track.</td></tr>
+          <tr><td>checked</td><td>boolean</td><td>—</td><td>Pass to control it.</td></tr>
+          <tr><td>defaultChecked</td><td>boolean</td><td>false</td><td>Uncontrolled starting state.</td></tr>
+          <tr><td>onCheckedChange</td><td>(checked: boolean) =&gt; void</td><td>—</td><td>Fires on the input's <code>change</code>.</td></tr>
+          <tr><td>disabled</td><td>boolean</td><td>false</td><td>Native disabled.</td></tr>
+          <tr><td>name / value</td><td>string</td><td>—</td><td>For form submission.</td></tr>
+          <tr><td>className</td><td>string</td><td>—</td><td>Appended to the <code>label</code> wrapper.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="d-sec" id="Checkbox">
+    <h3>Checkbox <span class="d-tag">forwardRef → input</span></h3>
+    <p class="d-lead">
+      The same row, with a 23px rounded box that draws its tick on. Adds
+      <code>indeterminate</code> — neither on nor off, the parent of a partly ticked group.
+      That is a DOM property rather than an attribute, so the component sets it in an effect.
+    </p>
+    <div class="d-prev">
+      <p class="d-cap">Preview — the third is indeterminate</p>
+      <div class="d-col d-w320">
+        <label class="ctl"><input type="checkbox" checked /><span class="box" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7"/></svg></span><span class="lbl">Wi-Fi</span></label>
+        <label class="ctl"><input type="checkbox" /><span class="box" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7"/></svg></span><span class="lbl">Bluetooth</span><span class="sub">Off</span></label>
+        <label class="ctl"><input type="checkbox" data-indeterminate /><span class="box" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7"/></svg></span><span class="lbl">All radios</span><span class="sub">Partly on</span></label>
+      </div>
+    </div>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code>&lt;<span class="d-tok-t">Checkbox</span> label=<span class="d-tok-s">"Wi-Fi"</span> defaultChecked /&gt;
+
+&lt;<span class="d-tok-t">Checkbox</span>
+  label=<span class="d-tok-s">"All radios"</span>
+  checked={all}
+  indeterminate={some &amp;&amp; !all}
+  onCheckedChange={setAll}
+/&gt;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>indeterminate</td><td>boolean</td><td>false</td><td>Shows a dash instead of a tick. Visual and assistive only — the underlying <code>checked</code> is untouched.</td></tr>
+          <tr><td colspan="4" style="color:var(--ink-soft)">Everything else is identical to <code>Switch</code>: <code>label</code>, <code>hint</code>, <code>accent</code>, <code>checked</code>, <code>defaultChecked</code>, <code>onCheckedChange</code>, <code>disabled</code>, <code>name</code>, <code>value</code>, <code>className</code>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="d-sec" id="RadioGroup">
+    <h3>RadioGroup</h3>
+    <p class="d-lead">
+      Real radios sharing a name, wrapped in <code>role="radiogroup"</code>. If you leave
+      <code>name</code> off, one is generated with <code>useId</code>, so two groups on a
+      page never collide. Arrow-key navigation is the browser's own.
+    </p>
+    <div class="d-prev">
+      <p class="d-cap">Preview</p>
+      <div class="opts d-w320" role="radiogroup" aria-label="Sleep schedule">
+        <label class="ctl"><input type="radio" name="dSched" checked /><span class="dot" aria-hidden="true"></span><span class="lbl">Every night</span></label>
+        <label class="ctl"><input type="radio" name="dSched" /><span class="dot" aria-hidden="true"></span><span class="lbl">Weeknights</span><span class="sub">Mon–Fri</span></label>
+        <label class="ctl"><input type="radio" name="dSched" /><span class="dot" aria-hidden="true"></span><span class="lbl">Never</span></label>
+      </div>
+    </div>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code>&lt;<span class="d-tok-t">RadioGroup</span>
+  aria-label=<span class="d-tok-s">"Sleep schedule"</span>
+  options={[
+    { value: <span class="d-tok-s">'nightly'</span>, label: <span class="d-tok-s">'Every night'</span> },
+    { value: <span class="d-tok-s">'weekdays'</span>, label: <span class="d-tok-s">'Weeknights'</span>, hint: <span class="d-tok-s">'Mon–Fri'</span> },
+    { value: <span class="d-tok-s">'never'</span>, label: <span class="d-tok-s">'Never'</span> },
+  ]}
+  value={schedule}
+  onValueChange={setSchedule}
+/&gt;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>options <span class="d-req">*</span></td><td>RadioOption[]</td><td>—</td><td><code>{ value, label, hint?, disabled? }</code></td></tr>
+          <tr><td>value</td><td>string</td><td>—</td><td>Pass to control it.</td></tr>
+          <tr><td>defaultValue</td><td>string</td><td>first option's value</td><td>Falls back to <code>''</code> if the list is empty.</td></tr>
+          <tr><td>onValueChange</td><td>(value: string) =&gt; void</td><td>—</td><td>—</td></tr>
+          <tr><td>name</td><td>string</td><td>generated</td><td>Set it for form submission.</td></tr>
+          <tr><td>accent</td><td>Accent</td><td>'sleep'</td><td>Applied to every row.</td></tr>
+          <tr><td>aria-label <span class="d-req">*</span></td><td>string</td><td>—</td><td>Names the group.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="d-sec" id="Segmented">
+    <h3>Segmented</h3>
+    <p class="d-lead">
+      One choice out of a few, with a thumb that slides to the selection. It is measured in
+      pixels on mount and on resize, so the thumb tracks the real button widths rather than
+      an assumed percentage.
+    </p>
+    <div class="d-prev">
+      <p class="d-cap">Preview — click to slide the thumb</p>
+      <div class="seg d-w320" role="tablist" aria-label="Range" data-seg>
+        <span class="thumb" aria-hidden="true"></span>
+        <button type="button" role="tab" aria-selected="true">Day</button>
+        <button type="button" role="tab" aria-selected="false">Week</button>
+        <button type="button" role="tab" aria-selected="false">Month</button>
+      </div>
+    </div>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code>&lt;<span class="d-tok-t">Segmented</span>
+  aria-label=<span class="d-tok-s">"Range"</span>
+  options={[
+    { value: <span class="d-tok-s">'day'</span>, label: <span class="d-tok-s">'Day'</span> },
+    { value: <span class="d-tok-s">'week'</span>, label: <span class="d-tok-s">'Week'</span> },
+    { value: <span class="d-tok-s">'month'</span>, label: <span class="d-tok-s">'Month'</span> },
+  ]}
+  onValueChange={setRange}
+/&gt;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>options <span class="d-req">*</span></td><td>{ value: string; label: ReactNode }[]</td><td>—</td><td>No <code>hint</code> here — segments are one word each.</td></tr>
+          <tr><td>value</td><td>string</td><td>—</td><td>Pass to control it.</td></tr>
+          <tr><td>defaultValue</td><td>string</td><td>first option's value</td><td>—</td></tr>
+          <tr><td>onValueChange</td><td>(value: string) =&gt; void</td><td>—</td><td>—</td></tr>
+          <tr><td>aria-label <span class="d-req">*</span></td><td>string</td><td>—</td><td>Names the <code>role="tablist"</code>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="d-sec" id="Select">
+    <h3>Select</h3>
+    <p class="d-lead">
+      A value, not an action — that is what separates this from <code>DropdownMenu</code>.
+      The listbox staggers its options in on open (each row is delayed by its index), arrow
+      keys walk them, Enter picks, and Escape closes and returns focus to the trigger.
+    </p>
+    <div class="d-prev d-tall">
+      <p class="d-cap">Preview — click the trigger</p>
+      <div class="drop d-w320" data-drop style="--accent:var(--personal)">
+        <button type="button" class="trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Wake-up sound">
+          <span class="swatch" aria-hidden="true"></span>
+          <span class="val">Early bird</span>
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="menu" role="listbox" aria-label="Wake-up sound">
+          <button type="button" role="option" aria-selected="true" class="opt" style="--i:0"><span class="dot" aria-hidden="true"></span>Early bird<span class="meta">6:00</span></button>
+          <button type="button" role="option" aria-selected="false" class="opt" style="--i:1"><span class="dot" aria-hidden="true"></span>Standard<span class="meta">7:30</span></button>
+          <button type="button" role="option" aria-selected="false" class="opt" style="--i:2"><span class="dot" aria-hidden="true"></span>Slow start<span class="meta">9:00</span></button>
+        </div>
+      </div>
+    </div>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code>&lt;<span class="d-tok-t">Select</span>
+  aria-label=<span class="d-tok-s">"Wake-up sound"</span>
+  accentColor=<span class="d-tok-s">"var(--personal)"</span>
+  options={[
+    { value: <span class="d-tok-s">'early'</span>, label: <span class="d-tok-s">'Early bird'</span>, meta: <span class="d-tok-s">'6:00'</span> },
+    { value: <span class="d-tok-s">'standard'</span>, label: <span class="d-tok-s">'Standard'</span>, meta: <span class="d-tok-s">'7:30'</span> },
+  ]}
+  value={sound}
+  onValueChange={setSound}
+/&gt;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>options <span class="d-req">*</span></td><td>SelectOption[]</td><td>—</td><td><code>{ value, label, meta? }</code> — <code>meta</code> is right-aligned detail.</td></tr>
+          <tr><td>value</td><td>string</td><td>—</td><td>Pass to control it.</td></tr>
+          <tr><td>defaultValue</td><td>string</td><td>first option's value</td><td>—</td></tr>
+          <tr><td>onValueChange</td><td>(value: string) =&gt; void</td><td>—</td><td>—</td></tr>
+          <tr><td>accentColor</td><td>string</td><td>var(--sleep)</td><td>Any CSS colour; drives the swatch, the ring and the selected dot.</td></tr>
+          <tr><td>disabled</td><td>boolean</td><td>false</td><td>Disables the trigger.</td></tr>
+          <tr><td>aria-label <span class="d-req">*</span></td><td>string</td><td>—</td><td>Names both the trigger and the listbox.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="d-note">
+      Open state is internal by design — a select that stays open across a re-render is a bug,
+      not a feature. Reach for <code>Popover</code> if you need to own it.
+    </div>
+  </section>
+
+  <section class="d-sec" id="Slider">
+    <h3>Slider</h3>
+    <p class="d-lead">
+      A native range input on a glass track. The fill spans the whole width and is revealed
+      by a moving mask, so the colour ramp stays put instead of rescaling on every change.
+      The mask head is placed in pixels at the thumb's true centre — a native thumb travels
+      from half its width to width minus half, not 0–100%.
+    </p>
+    <div class="d-prev">
+      <p class="d-cap">Preview — drag either one</p>
+      <div class="d-col d-w320">
+        <div class="slider" data-slider><span class="glow" aria-hidden="true"></span><span class="fill" aria-hidden="true"></span><input type="range" min="0" max="100" value="62" aria-label="Brightness" /></div>
+        <div class="slider" data-slider style="--sl:var(--sleep)"><span class="glow" aria-hidden="true"></span><span class="fill" aria-hidden="true"></span><input type="range" min="0" max="100" value="28" aria-label="Volume" /></div>
+      </div>
+    </div>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code>&lt;<span class="d-tok-t">Slider</span> aria-label=<span class="d-tok-s">"Brightness"</span> defaultValue={62} /&gt;
+
+&lt;<span class="d-tok-t">Slider</span>
+  aria-label=<span class="d-tok-s">"Volume"</span>
+  accentColor=<span class="d-tok-s">"var(--sleep)"</span>
+  min={0} max={11} step={0.5}
+  value={volume}
+  onValueChange={setVolume}
+/&gt;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>value</td><td>number</td><td>—</td><td>Pass to control it.</td></tr>
+          <tr><td>defaultValue</td><td>number</td><td>50</td><td>—</td></tr>
+          <tr><td>onValueChange</td><td>(value: number) =&gt; void</td><td>—</td><td>Already coerced to a number.</td></tr>
+          <tr><td>min / max / step</td><td>number</td><td>0 / 100 / 1</td><td>Passed straight to the input.</td></tr>
+          <tr><td>accentColor</td><td>string</td><td>var(--personal)</td><td>Sets <code>--sl</code>: the fill and its trailing bloom.</td></tr>
+          <tr><td>disabled</td><td>boolean</td><td>false</td><td>—</td></tr>
+          <tr><td>aria-label <span class="d-req">*</span></td><td>string</td><td>—</td><td>Names the range input.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ==================== TEXT ==================== -->
+  <div class="d-group" id="text"><h2>Text</h2><p>Recessed, because you pour text into them.</p></div>
+
+  <section class="d-sec" id="Input">
+    <h3>Input <span class="d-tag">forwardRef → input</span></h3>
+    <p class="d-lead">
+      A recessed well with optional leading icon, trailing unit, hint line and clear button.
+      The clear button only appears when the field has a value — which the component reads
+      from <code>value</code> or <code>defaultValue</code>, so it needs one of them to know.
+    </p>
+    <div class="d-prev">
+      <p class="d-cap">Preview — plain, with icon and unit, and invalid</p>
+      <div class="d-col d-w320">
+        <div class="field">
+          <div class="input"><input placeholder="Search settings" /></div>
+        </div>
+        <div class="field">
+          <div class="input filled">
+            <span class="lead" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 7v5l3 2"/><circle cx="12" cy="12" r="9"/></svg></span>
+            <input value="22" />
+            <span class="unit">min</span>
+            <button type="button" class="clear" aria-label="Clear"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="m5 5 14 14M19 5 5 19"/></svg></button>
+          </div>
+          <div class="hint"><span>How long before the screen dims</span></div>
+        </div>
+        <div class="field bad">
+          <div class="input"><input value="not-an-email" aria-invalid="true" /></div>
+          <div class="hint"><span>That doesn't look like an address</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code>&lt;<span class="d-tok-t">Input</span> placeholder=<span class="d-tok-s">"Search settings"</span> /&gt;
+
+&lt;<span class="d-tok-t">Input</span>
+  icon={&lt;<span class="d-tok-t">ClockIcon</span> /&gt;}
+  suffix=<span class="d-tok-s">"min"</span>
+  hint=<span class="d-tok-s">"How long before the screen dims"</span>
+  value={delay}
+  onChange={(e) =&gt; <span class="d-tok-t">setDelay</span>(e.target.value)}
+  onClear={() =&gt; <span class="d-tok-t">setDelay</span>(<span class="d-tok-s">''</span>)}
+/&gt;
+
+&lt;<span class="d-tok-t">Input</span> invalid hint=<span class="d-tok-s">"That doesn't look like an address"</span> value={email} /&gt;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>icon</td><td>ReactNode</td><td>—</td><td>Leading glyph, usually a 24×24 svg. Tints to the accent on focus.</td></tr>
+          <tr><td>suffix</td><td>ReactNode</td><td>—</td><td>Text after the field, e.g. a unit.</td></tr>
+          <tr><td>hint</td><td>ReactNode</td><td>—</td><td>Shown under the field; turns red when <code>invalid</code>.</td></tr>
+          <tr><td>invalid</td><td>boolean</td><td>false</td><td>Red ring and <code>aria-invalid</code>.</td></tr>
+          <tr><td>onClear</td><td>() =&gt; void</td><td>—</td><td>Renders the clear button. You clear the value yourself.</td></tr>
+          <tr><td>accent</td><td>Accent</td><td>'sleep'</td><td>Focus ring colour.</td></tr>
+          <tr><td>wrapperClassName</td><td>string</td><td>—</td><td>Goes on the <code>.field</code> wrapper; <code>className</code> goes on the input itself.</td></tr>
+          <tr><td>…rest</td><td>InputHTMLAttributes</td><td>—</td><td>Minus <code>prefix</code>, which collides with the HTML attribute.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="d-sec" id="Textarea">
+    <h3>Textarea <span class="d-tag">forwardRef → textarea</span></h3>
+    <p class="d-lead">
+      The same well, taller and with a softer radius. Adds <code>showCount</code>, which
+      renders a live count against <code>maxLength</code> — both are needed for the counter
+      to appear. <code>icon</code>, <code>suffix</code> and <code>onClear</code> are accepted
+      by the type but deliberately not rendered.
+    </p>
+    <div class="d-prev">
+      <p class="d-cap">Preview</p>
+      <div class="field d-w320">
+        <div class="input area"><textarea maxlength="140" placeholder="What should this mode do?">Turns off every notification except calls from favourites.</textarea></div>
+        <div class="hint"><span>Shown on the mode's card</span><span class="count">57/140</span></div>
+      </div>
+    </div>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code>&lt;<span class="d-tok-t">Textarea</span>
+  maxLength={140}
+  showCount
+  hint=<span class="d-tok-s">"Shown on the mode's card"</span>
+  value={note}
+  onChange={(e) =&gt; <span class="d-tok-t">setNote</span>(e.target.value)}
+/&gt;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>showCount</td><td>boolean</td><td>false</td><td>Live count against <code>maxLength</code>. Needs <code>maxLength</code> set.</td></tr>
+          <tr><td>hint / invalid / accent</td><td>—</td><td>—</td><td>Same as <code>Input</code>.</td></tr>
+          <tr><td>wrapperClassName</td><td>string</td><td>—</td><td>Same split as <code>Input</code>.</td></tr>
+          <tr><td>…rest</td><td>TextareaHTMLAttributes</td><td>—</td><td>Resize is off; the well has a 76px min-height.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ==================== DISCLOSURE ==================== -->
+  <div class="d-group" id="disclosure"><h2>Disclosure</h2><p>Showing one thing at a time.</p></div>
+
+  <section class="d-sec" id="Tabs">
+    <h3>Tabs</h3>
+    <p class="d-lead">
+      Full roving tab index: only the selected tab is in the tab order, and Arrow Left/Right
+      moves selection and focus together, wrapping at both ends. The ink bar is measured from
+      the active button, so it fits labels of any width. Panels stay mounted and are hidden
+      with the <code>hidden</code> attribute.
+    </p>
+    <div class="d-prev">
+      <p class="d-cap">Preview — try the arrow keys</p>
+      <div data-tabs>
+        <div class="tabs" role="tablist" aria-label="Mode detail">
+          <span class="ink" aria-hidden="true"></span>
+          <button type="button" role="tab" aria-selected="true" tabindex="0">Schedule</button>
+          <button type="button" role="tab" aria-selected="false" tabindex="-1">People</button>
+          <button type="button" role="tab" aria-selected="false" tabindex="-1">Apps</button>
+        </div>
+        <div class="tabpanel" role="tabpanel">Starts at <b>22:30</b> and ends when your first alarm goes off.</div>
+        <div class="tabpanel" role="tabpanel" hidden>Calls from <b>favourites</b> ring through. Everyone else goes to voicemail.</div>
+        <div class="tabpanel" role="tabpanel" hidden><b>Four</b> apps are allowed to notify you.</div>
+      </div>
+    </div>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code>&lt;<span class="d-tok-t">Tabs</span>
+  aria-label=<span class="d-tok-s">"Mode detail"</span>
+  items={[
+    { value: <span class="d-tok-s">'schedule'</span>, label: <span class="d-tok-s">'Schedule'</span>, content: &lt;<span class="d-tok-t">Schedule</span> /&gt; },
+    { value: <span class="d-tok-s">'people'</span>, label: <span class="d-tok-s">'People'</span>, content: &lt;<span class="d-tok-t">People</span> /&gt; },
+  ]}
+  onValueChange={setTab}
+/&gt;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>items <span class="d-req">*</span></td><td>TabItem[]</td><td>—</td><td><code>{ value, label, content }</code></td></tr>
+          <tr><td>value</td><td>string</td><td>—</td><td>Pass to control it.</td></tr>
+          <tr><td>defaultValue</td><td>string</td><td>first item's value</td><td>—</td></tr>
+          <tr><td>onValueChange</td><td>(value: string) =&gt; void</td><td>—</td><td>Fires on click and on arrow keys.</td></tr>
+          <tr><td>aria-label <span class="d-req">*</span></td><td>string</td><td>—</td><td>Names the tablist.</td></tr>
+          <tr><td>className</td><td>string</td><td>—</td><td>Wraps list and panels together.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="d-sec" id="Accordion">
+    <h3>Accordion</h3>
+    <p class="d-lead">
+      Rows that expand by animating <code>grid-template-rows</code> from <code>0fr</code> to
+      <code>1fr</code> — so the panel animates to its real height with no measuring and no
+      fixed max-height. <code>type="single"</code> closes the others;
+      <code>type="multiple"</code> lets them stack. Either way the value is an array.
+    </p>
+    <div class="d-prev">
+      <p class="d-cap">Preview — single, so opening one closes the rest</p>
+      <div class="acc" data-acc data-single>
+        <div class="acc__item open">
+          <button type="button" class="acc__trig" aria-expanded="true">When does it start?<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div class="acc__body" role="region"><div><p>At 22:30 every night, unless you've set a schedule of your own.</p></div></div>
+        </div>
+        <div class="acc__item">
+          <button type="button" class="acc__trig" aria-expanded="false">Who can still reach me?<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div class="acc__body" role="region"><div><p>Favourites ring through. A second call from the same number within three minutes always rings.</p></div></div>
+        </div>
+        <div class="acc__item">
+          <button type="button" class="acc__trig" aria-expanded="false">Does it sync?<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div class="acc__body" role="region"><div><p>Across every device signed in to the same account.</p></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code>&lt;<span class="d-tok-t">Accordion</span>
+  type=<span class="d-tok-s">"single"</span>
+  defaultValue={[<span class="d-tok-s">'start'</span>]}
+  items={[
+    { value: <span class="d-tok-s">'start'</span>, title: <span class="d-tok-s">'When does it start?'</span>, content: &lt;p&gt;At 22:30.&lt;/p&gt; },
+    { value: <span class="d-tok-s">'who'</span>, title: <span class="d-tok-s">'Who can still reach me?'</span>, content: &lt;p&gt;Favourites.&lt;/p&gt; },
+  ]}
+/&gt;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>items <span class="d-req">*</span></td><td>AccordionItemData[]</td><td>—</td><td><code>{ value, title, content }</code></td></tr>
+          <tr><td>type</td><td>'single' | 'multiple'</td><td>'single'</td><td><code>single</code> closes the others.</td></tr>
+          <tr><td>value</td><td>string[]</td><td>—</td><td>The open items. An array even for <code>single</code>.</td></tr>
+          <tr><td>defaultValue</td><td>string[]</td><td>[]</td><td>Everything closed to start.</td></tr>
+          <tr><td>onValueChange</td><td>(value: string[]) =&gt; void</td><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="d-sec" id="Collapsible">
+    <h3>Collapsible</h3>
+    <p class="d-lead">
+      One region and one trigger, with the trigger <em>below</em> the content — it reads as
+      "show more" rather than a header. Same <code>0fr → 1fr</code> animation as
+      <code>Accordion</code>.
+    </p>
+    <div class="d-prev">
+      <p class="d-cap">Preview</p>
+      <div class="acc__item d-w320" data-collapsible>
+        <div class="acc__body" role="region"><div><p>Sleep dims the display, silences notifications, and switches the lock screen to a clock. Alarms still sound.</p></div></div>
+        <button type="button" class="push" aria-expanded="false" style="margin-top:10px;width:100%;text-align:center" data-open-label="Fewer details">More details</button>
+      </div>
+    </div>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code>&lt;<span class="d-tok-t">Collapsible</span> label=<span class="d-tok-s">"More details"</span> openLabel=<span class="d-tok-s">"Fewer details"</span>&gt;
+  &lt;p&gt;Sleep dims the display and silences notifications.&lt;/p&gt;
+&lt;/<span class="d-tok-t">Collapsible</span>&gt;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>label <span class="d-req">*</span></td><td>ReactNode</td><td>—</td><td>Trigger text when closed.</td></tr>
+          <tr><td>openLabel</td><td>ReactNode</td><td>label</td><td>Replaces it when open.</td></tr>
+          <tr><td>open</td><td>boolean</td><td>—</td><td>Pass to control it.</td></tr>
+          <tr><td>defaultOpen</td><td>boolean</td><td>false</td><td>—</td></tr>
+          <tr><td>onOpenChange</td><td>(open: boolean) =&gt; void</td><td>—</td><td>—</td></tr>
+          <tr><td>children <span class="d-req">*</span></td><td>ReactNode</td><td>—</td><td>The region, wired with <code>aria-controls</code>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ==================== OVERLAYS ==================== -->
+  <div class="d-group" id="overlays"><h2>Overlays</h2><p>Everything that floats above the page.</p></div>
+
+  <section class="d-sec" id="Popover">
+    <h3>Popover</h3>
+    <p class="d-lead">
+      The one floating surface everything else is built on. It owns open state, outside-click
+      and Escape dismissal, and nothing else — no positioning library, since every panel here
+      is anchored to its own trigger. The trigger is a render prop, so you decide what the
+      anchor looks like while the component wires the ARIA.
+    </p>
+    <div class="d-prev d-tall">
+      <p class="d-cap">Preview — click outside or press Escape to dismiss</p>
+      <div class="d-row">
+        <div class="pv" data-pop>
+          <button type="button" class="push" aria-expanded="false" aria-haspopup="dialog">Schedule</button>
+          <div class="pop" role="dialog" aria-label="Schedule">
+            <h4>Wind down</h4>
+            <p>Sleep starts 30 minutes before your bedtime and eases the screen down.</p>
+            <div class="d-row"><button type="button" class="push primary" style="padding:11px 18px;font-size:12px">Set bedtime</button></div>
+          </div>
+        </div>
+        <div class="pv" data-pop>
+          <button type="button" class="push" aria-expanded="false" aria-haspopup="dialog">Aligned end</button>
+          <div class="pop" role="dialog" aria-label="Aligned end" style="left:auto;right:0">
+            <h4>align="end"</h4>
+            <p>The panel's right edge lines up with the anchor's, so it can't run off screen.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code>&lt;<span class="d-tok-t">Popover</span>
+  aria-label=<span class="d-tok-s">"Schedule"</span>
+  trigger={(props) =&gt; (
+    &lt;<span class="d-tok-t">Button</span> {...props}&gt;{props.open ? <span class="d-tok-s">'Close'</span> : <span class="d-tok-s">'Schedule'</span>}&lt;/<span class="d-tok-t">Button</span>&gt;
+  )}
+&gt;
+  &lt;h4&gt;Wind down&lt;/h4&gt;
+  &lt;p&gt;Sleep starts 30 minutes before your bedtime.&lt;/p&gt;
+&lt;/<span class="d-tok-t">Popover</span>&gt;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>trigger <span class="d-req">*</span></td><td>(props) =&gt; ReactNode</td><td>—</td><td>Called with <code>ref</code>, <code>onClick</code>, <code>aria-expanded</code>, <code>aria-haspopup</code> and <code>open</code>. Spread the first four onto a button.</td></tr>
+          <tr><td>children <span class="d-req">*</span></td><td>ReactNode</td><td>—</td><td>Panel contents. Always mounted; visibility is CSS.</td></tr>
+          <tr><td>open</td><td>boolean</td><td>—</td><td>Pass to control it.</td></tr>
+          <tr><td>defaultOpen</td><td>boolean</td><td>false</td><td>—</td></tr>
+          <tr><td>onOpenChange</td><td>(open: boolean) =&gt; void</td><td>—</td><td>Fires on click, outside click and Escape.</td></tr>
+          <tr><td>role</td><td>'dialog' | 'menu' | 'listbox'</td><td>'dialog'</td><td>Sets both the panel's role and the trigger's <code>aria-haspopup</code>.</td></tr>
+          <tr><td>align</td><td>'start' | 'end'</td><td>'start'</td><td><code>end</code> aligns the panel's right edge with the anchor's.</td></tr>
+          <tr><td>className</td><td>string</td><td>—</td><td>On the anchor; <code>panelClassName</code> is on the panel.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="d-note">
+      Closing returns focus to the trigger button — that is what the <code>ref</code> in the
+      render props is for. Forward it or focus will land on <code>&lt;body&gt;</code>.
+    </div>
+  </section>
+
+  <section class="d-sec" id="DropdownMenu">
+    <h3>DropdownMenu</h3>
+    <p class="d-lead">
+      Actions, not values. Built on <code>Popover</code> with <code>role="menu"</code>: the
+      first enabled item takes focus when it opens, arrow keys walk the list and wrap, and
+      Escape closes it. Shortcut hints are decorative — the component does not bind them.
+    </p>
+    <div class="d-prev d-tall">
+      <p class="d-cap">Preview — open it, then use ↑ ↓</p>
+      <div class="menus" data-pop>
+        <button type="button" class="push" aria-expanded="false" aria-haspopup="menu">Actions</button>
+        <div class="pop" role="menu" aria-label="Actions">
+          <div>
+            <button type="button" role="menuitem" class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>New mode<span class="sc">⌘N</span></button>
+            <button type="button" role="menuitem" class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16v3h16v-3M12 4v11m0 0-4-4m4 4 4-4"/></svg>Duplicate<span class="sc">⌘D</span></button>
+            <button type="button" role="menuitem" class="item" disabled style="opacity:.4">Share</button>
+            <hr class="sep" />
+            <button type="button" role="menuitem" class="item danger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 7h14M10 7V5h4v2M8 7v12h8V7"/></svg>Delete<span class="sc">⌫</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code>&lt;<span class="d-tok-t">DropdownMenu</span>
+  label=<span class="d-tok-s">"Actions"</span>
+  aria-label=<span class="d-tok-s">"Mode actions"</span>
+  items={[
+    { label: <span class="d-tok-s">'New mode'</span>, shortcut: <span class="d-tok-s">'⌘N'</span>, onSelect: create },
+    { label: <span class="d-tok-s">'Duplicate'</span>, shortcut: <span class="d-tok-s">'⌘D'</span>, onSelect: duplicate },
+    { label: <span class="d-tok-s">'Share'</span>, disabled: <span class="d-tok-k">true</span> },
+    { label: <span class="d-tok-s">'Delete'</span>, danger: <span class="d-tok-k">true</span>, separatorBefore: <span class="d-tok-k">true</span>, onSelect: remove },
+  ]}
+/&gt;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>items <span class="d-req">*</span></td><td>MenuItem[]</td><td>—</td><td><code>{ label, onSelect?, icon?, shortcut?, danger?, separatorBefore?, disabled? }</code></td></tr>
+          <tr><td>label <span class="d-req">*</span></td><td>ReactNode</td><td>—</td><td>The trigger's text.</td></tr>
+          <tr><td>open / defaultOpen / onOpenChange</td><td>—</td><td>false</td><td>Same contract as <code>Popover</code>.</td></tr>
+          <tr><td>align</td><td>'start' | 'end'</td><td>'start'</td><td>Forwarded to <code>Popover</code>.</td></tr>
+          <tr><td>triggerClassName</td><td>string</td><td>—</td><td>Appended after <code>push</code> on the trigger.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="d-note">
+      Selecting an item calls <code>onSelect</code> but does <em>not</em> close the menu —
+      close it from the handler if that is what you want. Keeping it open is what makes
+      multi-step menus possible.
+    </div>
+  </section>
+
+  <section class="d-sec" id="Tooltip">
+    <h3>Tooltip</h3>
+    <p class="d-lead">
+      Pure CSS on hover and focus, so it costs nothing until someone looks at it. It clones
+      its child to attach <code>aria-describedby</code>, which means the child must be a
+      single element that accepts props — not a fragment, not a string.
+    </p>
+    <div class="d-prev">
+      <p class="d-cap">Preview — hover or tab to the buttons</p>
+      <div class="d-row">
+        <span class="tip"><button class="iconbtn" aria-label="Copy link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 15 15 9M8 12H6a4 4 0 0 1 0-8h2M16 12h2a4 4 0 0 1 0 8h-2"/></svg></button><span class="bubble" role="tooltip">Copy link</span></span>
+        <span class="tip"><button class="push">Hover me</button><span class="bubble" role="tooltip">The bubble is a sibling, not a portal</span></span>
+      </div>
+    </div>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code>&lt;<span class="d-tok-t">Tooltip</span> label=<span class="d-tok-s">"Copy link"</span>&gt;
+  &lt;<span class="d-tok-t">IconButton</span> aria-label=<span class="d-tok-s">"Copy link"</span>&gt;&lt;<span class="d-tok-t">LinkIcon</span> /&gt;&lt;/<span class="d-tok-t">IconButton</span>&gt;
+&lt;/<span class="d-tok-t">Tooltip</span>&gt;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>label <span class="d-req">*</span></td><td>ReactNode</td><td>—</td><td>Bubble contents. It does not wrap — keep it short.</td></tr>
+          <tr><td>children <span class="d-req">*</span></td><td>ReactElement</td><td>—</td><td>Exactly one element. Cloned to receive <code>aria-describedby</code>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="d-note d-warn">
+      A tooltip is a description, not a name. An <code>IconButton</code> still needs its own
+      <code>aria-label</code> — the tooltip does not replace it.
+    </div>
+  </section>
+
+  <section class="d-sec" id="HoverCard">
+    <h3>HoverCard</h3>
+    <p class="d-lead">
+      A rich panel on hover, with open and close delays so it doesn't flicker as the pointer
+      crosses it. Focus opens it too, since hover alone is unreachable by keyboard. State is
+      internal — there is no <code>open</code> prop.
+    </p>
+    <div class="d-prev d-tall">
+      <p class="d-cap">Preview — hover the name</p>
+      <div style="font-size:14px;color:var(--ink-soft);line-height:1.8">
+        Last edited by <span class="hc" data-hc><button type="button" class="hc__trig">Ada Lovelace</button><span class="pop" role="dialog" aria-label="Ada Lovelace" style="display:block">
+          <span class="hc__head">
+            <span class="ava" style="--accent:var(--personal)"><span aria-label="Ada Lovelace">AL</span><span class="status" aria-label="Online"></span></span>
+            <span><b class="hc__name">Ada Lovelace</b><span class="hc__meta">Design systems</span></span>
+          </span>
+          <span class="hc__body" style="display:block">Owns the glass material and the three accents. Wrote the first note on why cards aren't blurred.</span>
+          <span class="hc__stats"><span><b>128</b>commits</span><span><b>14</b>components</span></span>
+        </span></span> three minutes ago.
+      </div>
+    </div>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code>&lt;<span class="d-tok-t">HoverCard</span> aria-label=<span class="d-tok-s">"Ada Lovelace"</span> trigger=<span class="d-tok-s">"Ada Lovelace"</span>&gt;
+  &lt;<span class="d-tok-t">Avatar</span> name=<span class="d-tok-s">"Ada Lovelace"</span> status=<span class="d-tok-s">"online"</span> /&gt;
+  &lt;p&gt;Owns the glass material and the three accents.&lt;/p&gt;
+&lt;/<span class="d-tok-t">HoverCard</span>&gt;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>trigger <span class="d-req">*</span></td><td>ReactNode</td><td>—</td><td>Rendered inside a button with a dashed underline.</td></tr>
+          <tr><td>children <span class="d-req">*</span></td><td>ReactNode</td><td>—</td><td>Panel contents.</td></tr>
+          <tr><td>openDelay</td><td>number</td><td>170</td><td>Milliseconds before it appears.</td></tr>
+          <tr><td>closeDelay</td><td>number</td><td>140</td><td>Milliseconds before it leaves.</td></tr>
+          <tr><td>aria-label</td><td>string</td><td>—</td><td>Names the panel's <code>role="dialog"</code>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="d-sec" id="Dialog">
+    <h3>Dialog</h3>
+    <p class="d-lead">
+      Wraps the native <code>&lt;dialog&gt;</code>, so focus trapping, inertness and Escape are
+      the platform's job rather than ours. Open state is fully yours — there is no
+      <code>defaultOpen</code>. Clicking the backdrop calls <code>onClose</code>; so does
+      Escape, whose default cancel is prevented so React stays the source of truth.
+    </p>
+    <div class="d-prev">
+      <p class="d-cap">Preview</p>
+      <div class="d-row">
+        <button class="push primary" data-dialog="dDialogDemo">Open dialog</button>
+      </div>
+    </div>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code><span class="d-tok-k">const</span> [open, setOpen] = <span class="d-tok-t">useState</span>(<span class="d-tok-k">false</span>);
+
+&lt;<span class="d-tok-t">Dialog</span>
+  open={open}
+  onClose={() =&gt; <span class="d-tok-t">setOpen</span>(<span class="d-tok-k">false</span>)}
+  icon={&lt;<span class="d-tok-t">MoonIcon</span> /&gt;}
+  title=<span class="d-tok-s">"Set a bedtime"</span>
+  description=<span class="d-tok-s">"Sleep starts 30 minutes before, easing the screen down."</span>
+  footer={&lt;&gt;
+    &lt;<span class="d-tok-t">Button</span> onClick={() =&gt; <span class="d-tok-t">setOpen</span>(<span class="d-tok-k">false</span>)}&gt;Not now&lt;/<span class="d-tok-t">Button</span>&gt;
+    &lt;<span class="d-tok-t">Button</span> variant=<span class="d-tok-s">"primary"</span> onClick={save}&gt;Save&lt;/<span class="d-tok-t">Button</span>&gt;
+  &lt;/&gt;}
+&gt;
+  &lt;<span class="d-tok-t">Input</span> icon={&lt;<span class="d-tok-t">ClockIcon</span> /&gt;} defaultValue=<span class="d-tok-s">"22:30"</span> /&gt;
+&lt;/<span class="d-tok-t">Dialog</span>&gt;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>open <span class="d-req">*</span></td><td>boolean</td><td>—</td><td>Controlled only. An effect calls <code>showModal()</code> / <code>close()</code>.</td></tr>
+          <tr><td>onClose <span class="d-req">*</span></td><td>() =&gt; void</td><td>—</td><td>Backdrop click and Escape.</td></tr>
+          <tr><td>title <span class="d-req">*</span></td><td>ReactNode</td><td>—</td><td>Serif heading.</td></tr>
+          <tr><td>description</td><td>ReactNode</td><td>—</td><td>Muted paragraph under it.</td></tr>
+          <tr><td>icon</td><td>ReactNode</td><td>—</td><td>Small glass chip above the title, tinted with the accent.</td></tr>
+          <tr><td>children</td><td>ReactNode</td><td>—</td><td>Wrapped in a <code>.fields</code> grid.</td></tr>
+          <tr><td>footer</td><td>ReactNode</td><td>—</td><td>Buttons along the bottom; they stretch to fill the row.</td></tr>
+          <tr><td>accentColor</td><td>string</td><td>var(--sleep)</td><td>Any CSS colour; drives the halo and the icon chip.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="d-sec" id="AlertDialog">
+    <h3>AlertDialog</h3>
+    <p class="d-lead">
+      A dialog that interrupts: exactly two ways out, and no dismiss-by-accident — clicking
+      the backdrop does nothing. Escape still cancels, because the platform guarantees it.
+      <code>destructive</code> defaults to <code>true</code>, which paints the confirm button
+      red and the sheet's halo with it.
+    </p>
+    <div class="d-prev">
+      <p class="d-cap">Preview</p>
+      <div class="d-row">
+        <button class="push danger" data-dialog="dAlertDemo">Delete mode</button>
+      </div>
+    </div>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code>&lt;<span class="d-tok-t">AlertDialog</span>
+  open={confirming}
+  onCancel={() =&gt; <span class="d-tok-t">setConfirming</span>(<span class="d-tok-k">false</span>)}
+  onConfirm={remove}
+  title=<span class="d-tok-s">"Delete this mode?"</span>
+  description=<span class="d-tok-s">"Its schedule and app list go with it. This can't be undone."</span>
+  confirmLabel=<span class="d-tok-s">"Delete"</span>
+/&gt;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>open <span class="d-req">*</span></td><td>boolean</td><td>—</td><td>Controlled only.</td></tr>
+          <tr><td>onCancel <span class="d-req">*</span></td><td>() =&gt; void</td><td>—</td><td>Cancel button and Escape.</td></tr>
+          <tr><td>onConfirm <span class="d-req">*</span></td><td>() =&gt; void</td><td>—</td><td>Does not close the dialog for you.</td></tr>
+          <tr><td>title <span class="d-req">*</span></td><td>ReactNode</td><td>—</td><td>Wired as <code>aria-labelledby</code>.</td></tr>
+          <tr><td>description</td><td>ReactNode</td><td>—</td><td>—</td></tr>
+          <tr><td>icon</td><td>ReactNode</td><td>—</td><td>Chip above the title.</td></tr>
+          <tr><td>cancelLabel</td><td>string</td><td>'Cancel'</td><td>—</td></tr>
+          <tr><td>confirmLabel</td><td>string</td><td>'Confirm'</td><td>—</td></tr>
+          <tr><td>destructive</td><td>boolean</td><td>true</td><td><code>false</code> makes the confirm button primary blue instead of red.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="d-sec" id="Toast">
+    <h3>ToastProvider &amp; useToast <span class="d-tag">context</span></h3>
+    <p class="d-lead">
+      Mount the provider once near the root; call <code>useToast()</code> anywhere below it.
+      The viewport is fixed bottom-right with <code>aria-live="polite"</code>, and older
+      toasts drop off once <code>max</code> are on screen. A toast clears itself after its
+      duration — pass <code>0</code> to keep it until dismissed.
+    </p>
+    <div class="d-prev">
+      <p class="d-cap">Preview — all four tones</p>
+      <div class="d-row">
+        <button class="push" data-toast="info">Info</button>
+        <button class="push" data-toast="success">Success</button>
+        <button class="push" data-toast="warning">Warning</button>
+        <button class="push" data-toast="danger">Danger</button>
+        <button class="push" data-toast="action">With action</button>
+      </div>
+    </div>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code><span class="d-tok-k">const</span> { toast, dismiss } = <span class="d-tok-t">useToast</span>();
+
+<span class="d-tok-t">toast</span>({
+  title: <span class="d-tok-s">'Sleep scheduled'</span>,
+  description: <span class="d-tok-s">'Starts at 22:30 tonight.'</span>,
+  tone: <span class="d-tok-s">'success'</span>,
+  action: { label: <span class="d-tok-s">'Undo'</span>, onClick: undo },
+});</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>ToastProvider prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>children <span class="d-req">*</span></td><td>ReactNode</td><td>—</td><td>Your tree.</td></tr>
+          <tr><td>max</td><td>number</td><td>3</td><td>Older toasts drop off the top once this many are on screen.</td></tr>
+          <tr><td>defaultDuration</td><td>number</td><td>4500</td><td>Milliseconds, used when a toast doesn't set its own.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>ToastOptions</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>title <span class="d-req">*</span></td><td>string</td><td>—</td><td>—</td></tr>
+          <tr><td>description</td><td>string</td><td>—</td><td>—</td></tr>
+          <tr><td>tone</td><td>'info' | 'success' | 'warning' | 'danger'</td><td>'info'</td><td>Maps to <code>--sleep</code>, <code>--ok</code>, <code>--personal</code>, <code>--dnd</code>.</td></tr>
+          <tr><td>duration</td><td>number</td><td>defaultDuration</td><td><code>0</code> keeps it until dismissed.</td></tr>
+          <tr><td>action</td><td>{ label, onClick }</td><td>—</td><td>Clicking it runs the handler and dismisses the toast.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>useToast returns</th><th>Type</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>toast</td><td>(options: ToastOptions) =&gt; number</td><td>Returns the id, so you can dismiss it early.</td></tr>
+          <tr><td>dismiss</td><td>(id: number) =&gt; void</td><td>Removes it immediately.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="d-note">
+      Throws if called outside a <code>ToastProvider</code>. The countdown bar along the
+      bottom edge is driven by <code>--ms</code>, so it always matches the real duration.
+    </div>
+  </section>
+
+  <!-- ==================== DISPLAY ==================== -->
+  <div class="d-group" id="display"><h2>Display</h2><p>Surfaces and ornaments. Mostly stateless.</p></div>
+
+  <section class="d-sec" id="Card">
+    <h3>Card <span class="d-tag">forwardRef → div</span></h3>
+    <p class="d-lead">
+      The container everything else sits in. Its <code>title</code> is a small-caps label
+      along the top edge — not the HTML <code>title</code> attribute, which is why the props
+      omit it from the native set.
+    </p>
+    <div class="d-prev">
+      <p class="d-cap">Preview</p>
+      <div class="d-grid2">
+        <div class="card">
+          <h2>Tonight</h2>
+          <div class="row">Bedtime<span class="sub">22:30</span></div>
+          <div class="row">Alarm<span class="sub">06:45</span></div>
+        </div>
+        <div class="card">
+          <h2>Status</h2>
+          <div class="d-row"><span class="badge"><i style="--bc:var(--ok)"></i> Synced</span><span class="badge"><i style="--bc:var(--personal)"></i> 2 pending</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code>&lt;<span class="d-tok-t">Card</span> title=<span class="d-tok-s">"Tonight"</span>&gt;
+  &lt;p&gt;Bedtime 22:30&lt;/p&gt;
+&lt;/<span class="d-tok-t">Card</span>&gt;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>title</td><td>ReactNode</td><td>—</td><td>Rendered as an <code>&lt;h2&gt;</code> in small caps. The native <code>title</code> attribute is omitted from the type to make room for it.</td></tr>
+          <tr><td>children</td><td>ReactNode</td><td>—</td><td>—</td></tr>
+          <tr><td>…rest</td><td>HTMLAttributes&lt;HTMLDivElement&gt;</td><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="d-note d-warn">
+      Cards are translucent but deliberately <b>not</b> blurred — see
+      <a href="#glass" style="color:var(--ink)">A note on glass</a>. Add
+      <code>className="lifted"</code> when a popover inside the card needs to escape above
+      its neighbours.
+    </div>
+  </section>
+
+  <section class="d-sec" id="Badge">
+    <h3>Badge</h3>
+    <p class="d-lead">
+      A small glass pill with an optional glowing dot. <code>color</code> is any CSS colour
+      and drives both the dot and its bloom.
+    </p>
+    <div class="d-prev">
+      <p class="d-cap">Preview</p>
+      <div class="d-row">
+        <span class="badge">No dot</span>
+        <span class="badge"><i style="--bc:var(--ok)"></i> Online</span>
+        <span class="badge"><i style="--bc:var(--personal)"></i> Degraded</span>
+        <span class="badge"><i style="--bc:var(--dnd)"></i> Offline</span>
+      </div>
+    </div>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code>&lt;<span class="d-tok-t">Badge</span>&gt;No dot&lt;/<span class="d-tok-t">Badge</span>&gt;
+&lt;<span class="d-tok-t">Badge</span> color=<span class="d-tok-s">"var(--ok)"</span>&gt;Online&lt;/<span class="d-tok-t">Badge</span>&gt;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>color</td><td>string</td><td>—</td><td>Sets <code>--bc</code>. Omit it and no dot renders.</td></tr>
+          <tr><td>…rest</td><td>HTMLAttributes&lt;HTMLSpanElement&gt;</td><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="d-sec" id="Avatar">
+    <h3>Avatar</h3>
+    <p class="d-lead">
+      Shows the photo when it loads and the initials when it doesn't — an <code>onError</code>
+      on the image flips it to the fallback, so a broken URL degrades instead of showing a
+      torn-image icon. Initials are the first letter of the first two words of
+      <code>name</code>.
+    </p>
+    <div class="d-prev">
+      <p class="d-cap">Preview — the third has a deliberately broken src</p>
+      <div class="d-row">
+        <span class="ava"><span aria-label="Ada Lovelace">AL</span></span>
+        <span class="ava" style="--accent:var(--personal)"><span aria-label="Grace Hopper">GH</span><span class="status" aria-label="Online"></span></span>
+        <span class="ava" style="--accent:var(--dnd)"><span aria-label="Alan Turing">AT</span></span>
+      </div>
+    </div>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code>&lt;<span class="d-tok-t">Avatar</span> name=<span class="d-tok-s">"Ada Lovelace"</span> /&gt;
+&lt;<span class="d-tok-t">Avatar</span> name=<span class="d-tok-s">"Grace Hopper"</span> src={photo} status=<span class="d-tok-s">"online"</span> accentColor=<span class="d-tok-s">"var(--personal)"</span> /&gt;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>name <span class="d-req">*</span></td><td>string</td><td>—</td><td>The alt text, and the source of the fallback initials.</td></tr>
+          <tr><td>src</td><td>string</td><td>—</td><td>Falls back to initials on error.</td></tr>
+          <tr><td>status</td><td>'online' | 'none'</td><td>'none'</td><td>Green dot at the bottom-right.</td></tr>
+          <tr><td>accentColor</td><td>string</td><td>var(--sleep)</td><td>The gradient behind the initials.</td></tr>
+          <tr><td>…rest</td><td>HTMLAttributes&lt;HTMLSpanElement&gt;</td><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="d-sec" id="AvatarStack">
+    <h3>AvatarStack</h3>
+    <p class="d-lead">
+      Overlapping avatars with a ring in the page colour between them. Anyone past
+      <code>max</code> collapses into a <code>+N</code> chip.
+    </p>
+    <div class="d-prev">
+      <p class="d-cap">Preview — five people, max 3</p>
+      <div class="ava__stack">
+        <span class="ava"><span aria-label="Ada Lovelace">AL</span></span>
+        <span class="ava" style="--accent:var(--personal)"><span aria-label="Grace Hopper">GH</span></span>
+        <span class="ava" style="--accent:var(--dnd)"><span aria-label="Alan Turing">AT</span></span>
+        <span class="more">+2</span>
+      </div>
+    </div>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code>&lt;<span class="d-tok-t">AvatarStack</span>
+  max={3}
+  people={[
+    { name: <span class="d-tok-s">'Ada Lovelace'</span> },
+    { name: <span class="d-tok-s">'Grace Hopper'</span>, accentColor: <span class="d-tok-s">'var(--personal)'</span> },
+    { name: <span class="d-tok-s">'Alan Turing'</span>, src: photo },
+  ]}
+/&gt;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>people <span class="d-req">*</span></td><td>{ name, src?, accentColor? }[]</td><td>—</td><td><code>name</code> is also the React key, so it must be unique.</td></tr>
+          <tr><td>max</td><td>number</td><td>3</td><td>The rest become <code>+N</code>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="d-sec" id="AspectRatio">
+    <h3>AspectRatio</h3>
+    <p class="d-lead">
+      A box that keeps its shape, using the CSS <code>aspect-ratio</code> property with a
+      gradient placeholder behind whatever you put in it.
+    </p>
+    <div class="d-prev">
+      <p class="d-cap">Preview — 16/9 and 1/1</p>
+      <div class="d-grid2">
+        <div class="ar"><span>16 / 9</span></div>
+        <div class="ar" style="--ar:1/1"><span>1 / 1</span></div>
+      </div>
+    </div>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code>&lt;<span class="d-tok-t">AspectRatio</span> ratio=<span class="d-tok-s">"16/9"</span>&gt;
+  &lt;img src={cover} alt=<span class="d-tok-s">""</span> /&gt;
+&lt;/<span class="d-tok-t">AspectRatio</span>&gt;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>ratio</td><td>string</td><td>'16/9'</td><td>Sets <code>--ar</code>. Any valid <code>aspect-ratio</code> value — <code>1/1</code>, <code>9/16</code>.</td></tr>
+          <tr><td>…rest</td><td>HTMLAttributes&lt;HTMLDivElement&gt;</td><td>—</td><td><code>style</code> is merged after the ratio, so it wins.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="d-sec" id="Separator">
+    <h3>Separator</h3>
+    <p class="d-lead">
+      A hairline in three shapes: a horizontal rule, a vertical divider for toolbars, and a
+      labelled rule with a word in the middle. Passing <code>label</code> wins over
+      <code>orientation</code> — a labelled separator is always horizontal.
+    </p>
+    <div class="d-prev">
+      <p class="d-cap">Preview</p>
+      <div class="d-w320">
+        <hr class="sep" />
+        <div class="sep labelled" role="separator">or</div>
+        <div class="d-row" style="gap:0">
+          <button class="tgl" aria-label="One">1</button>
+          <span class="sep v" role="separator" aria-orientation="vertical"></span>
+          <button class="tgl" aria-label="Two">2</button>
+        </div>
+      </div>
+    </div>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code>&lt;<span class="d-tok-t">Separator</span> /&gt;
+&lt;<span class="d-tok-t">Separator</span> label=<span class="d-tok-s">"or"</span> /&gt;
+&lt;<span class="d-tok-t">Separator</span> orientation=<span class="d-tok-s">"vertical"</span> /&gt;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>orientation</td><td>'horizontal' | 'vertical'</td><td>'horizontal'</td><td>Horizontal renders an <code>&lt;hr&gt;</code>; vertical renders a <code>&lt;span role="separator"&gt;</code>.</td></tr>
+          <tr><td>label</td><td>ReactNode</td><td>—</td><td>Rule with a word in the middle. Overrides <code>orientation</code>.</td></tr>
+          <tr><td>className</td><td>string</td><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="d-sec" id="ScrollArea">
+    <h3>ScrollArea</h3>
+    <p class="d-lead">
+      A fixed-height viewport with a slim scrollbar and a mask that fades the top and bottom
+      18 pixels, so content dissolves at the edges instead of being cut off.
+    </p>
+    <div class="d-prev">
+      <p class="d-cap">Preview — scroll inside it</p>
+      <div class="scroll d-w320" style="height:168px">
+        <div class="row">Messages<span class="sub">On</span></div>
+        <div class="row">Mail<span class="sub">Off</span></div>
+        <div class="row">Calendar<span class="sub">On</span></div>
+        <div class="row">Reminders<span class="sub">On</span></div>
+        <div class="row">Photos<span class="sub">Off</span></div>
+        <div class="row">Music<span class="sub">Off</span></div>
+        <div class="row">Podcasts<span class="sub">Off</span></div>
+        <div class="row">Fitness<span class="sub">On</span></div>
+      </div>
+    </div>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code>&lt;<span class="d-tok-t">ScrollArea</span> height={220}&gt;
+  {apps.<span class="d-tok-t">map</span>((app) =&gt; &lt;<span class="d-tok-t">Row</span> key={app.id} {...app} /&gt;)}
+&lt;/<span class="d-tok-t">ScrollArea</span>&gt;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>height</td><td>number | string</td><td>168</td><td>A number becomes pixels. Merged into <code>style</code>, which you can override.</td></tr>
+          <tr><td>…rest</td><td>HTMLAttributes&lt;HTMLDivElement&gt;</td><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="d-sec" id="Progress">
+    <h3>Progress</h3>
+    <p class="d-lead">
+      A recessed track with a glowing fill. Leave <code>value</code> undefined for the
+      indeterminate sweep — which also drops <code>aria-valuenow</code>, the correct signal
+      for "we don't know how far along this is". Determinate values are clamped to 0–100%.
+    </p>
+    <div class="d-prev">
+      <p class="d-cap">Preview — 68%, and indeterminate</p>
+      <div class="d-col d-w320">
+        <div class="prog" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="68" aria-label="Sync"><i style="width:68%"></i></div>
+        <div class="prog indeterminate" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Working"><i></i></div>
+        <div class="prog" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="34" aria-label="Upload" style="--accent:var(--sleep)"><i style="width:34%"></i></div>
+      </div>
+    </div>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code>&lt;<span class="d-tok-t">Progress</span> value={68} aria-label=<span class="d-tok-s">"Sync"</span> /&gt;
+&lt;<span class="d-tok-t">Progress</span> aria-label=<span class="d-tok-s">"Working"</span> /&gt;                     <span class="d-tok-c">// indeterminate</span>
+&lt;<span class="d-tok-t">Progress</span> value={34} max={50} accentColor=<span class="d-tok-s">"var(--sleep)"</span> /&gt;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>value</td><td>number</td><td>undefined</td><td>Undefined means indeterminate.</td></tr>
+          <tr><td>max</td><td>number</td><td>100</td><td>The percentage is <code>value / max</code>.</td></tr>
+          <tr><td>accentColor</td><td>string</td><td>var(--personal)</td><td>Sets <code>--accent</code>.</td></tr>
+          <tr><td>aria-label</td><td>string</td><td>—</td><td>Optional but strongly advised.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ==================== DATA ==================== -->
+  <div class="d-group" id="data"><h2>Data</h2><p>The two components with real logic in them.</p></div>
+
+  <section class="d-sec" id="DataTable">
+    <h3>DataTable <span class="d-tag">generic &lt;Row&gt;</span></h3>
+    <p class="d-lead">
+      Sorting, searching, pagination and selection over a plain array — no data layer, no
+      context, no controlled state. Selection is keyed by id, so it survives paging and
+      filtering: tick a row, search it away, and it is still selected when it comes back.
+    </p>
+    <p class="d-lead">
+      The header checkbox is tri-state. It reflects only the <em>current page</em>: checked
+      when every visible row is picked, indeterminate when some are, and ticking it adds the
+      page to the selection rather than replacing it.
+    </p>
+    <div class="d-prev">
+      <p class="d-cap">Preview — search, sort by any column, select, page</p>
+      <div id="dTableDemo"></div>
+    </div>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code><span class="d-tok-k">type</span> <span class="d-tok-t">Mode</span> = { id: string; name: string; owner: string; uses: number };
+
+&lt;<span class="d-tok-t">DataTable</span>&lt;<span class="d-tok-t">Mode</span>&gt;
+  aria-label=<span class="d-tok-s">"Modes"</span>
+  rows={modes}
+  rowId={(row) =&gt; row.id}
+  searchFields={(row) =&gt; `${row.name} ${row.owner}`}
+  selectable
+  pageSize={5}
+  onSelectionChange={setSelected}
+  columns={[
+    { key: <span class="d-tok-s">'name'</span>, header: <span class="d-tok-s">'Mode'</span> },
+    { key: <span class="d-tok-s">'owner'</span>, header: <span class="d-tok-s">'Owner'</span> },
+    {
+      key: <span class="d-tok-s">'uses'</span>,
+      header: <span class="d-tok-s">'Uses'</span>,
+      sortValue: (row) =&gt; row.uses,        <span class="d-tok-c">// number, so it sorts numerically</span>
+      cell: (row) =&gt; `${row.uses}×`,
+    },
+    { key: <span class="d-tok-s">'actions'</span>, header: <span class="d-tok-s">''</span>, sortable: <span class="d-tok-k">false</span>, cell: <span class="d-tok-t">RowMenu</span> },
+  ]}
+/&gt;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>rows <span class="d-req">*</span></td><td>Row[]</td><td>—</td><td>Never mutated — sorting copies first.</td></tr>
+          <tr><td>columns <span class="d-req">*</span></td><td>Column&lt;Row&gt;[]</td><td>—</td><td>See below.</td></tr>
+          <tr><td>rowId <span class="d-req">*</span></td><td>(row: Row) =&gt; string</td><td>—</td><td>Stable identity, used for the React key and for selection.</td></tr>
+          <tr><td>searchFields</td><td>(row: Row) =&gt; string</td><td>—</td><td>The haystack for the search box. Omit it and search does nothing.</td></tr>
+          <tr><td>pageSize</td><td>number</td><td>5</td><td>Rows per page.</td></tr>
+          <tr><td>selectable</td><td>boolean</td><td>false</td><td>Adds the checkbox column and the selection bar.</td></tr>
+          <tr><td>onSelectionChange</td><td>(ids: string[]) =&gt; void</td><td>—</td><td>The full id list after every change.</td></tr>
+          <tr><td>emptyMessage</td><td>(query: string) =&gt; ReactNode</td><td>—</td><td>Shown when nothing matches; receives the current query.</td></tr>
+          <tr><td>aria-label <span class="d-req">*</span></td><td>string</td><td>—</td><td>Names the table.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Column&lt;Row&gt;</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>key <span class="d-req">*</span></td><td>string</td><td>—</td><td>Also the fallback accessor: <code>String(row[key])</code>.</td></tr>
+          <tr><td>header <span class="d-req">*</span></td><td>ReactNode</td><td>—</td><td>—</td></tr>
+          <tr><td>cell</td><td>(row: Row) =&gt; ReactNode</td><td>—</td><td>Omit to render <code>String(row[key])</code>.</td></tr>
+          <tr><td>sortValue</td><td>(row: Row) =&gt; string | number</td><td>—</td><td>Return a number for numeric or date columns — otherwise <code>"10"</code> sorts before <code>"9"</code>.</td></tr>
+          <tr><td>sortable</td><td>boolean</td><td>true</td><td>Only <code>false</code> disables it; the header renders as plain text.</td></tr>
+          <tr><td>className</td><td>string</td><td>—</td><td>Applied to both the <code>th</code> and every <code>td</code>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="d-note">
+      Selection, sort, search and page are all internal state. <code>onSelectionChange</code>
+      is a notification, not a controlled value — there is no <code>selection</code> prop to
+      pass back in.
+    </div>
+  </section>
+
+  <section class="d-sec" id="DatePicker">
+    <h3>DatePicker</h3>
+    <p class="d-lead">
+      A month grid of 42 cells — always six weeks, so the panel never changes height as you
+      page through months. Month names and the trigger label come from
+      <code>toLocaleDateString</code>, so they follow the <code>locale</code> you pass rather
+      than a bundled translation table.
+    </p>
+    <div class="d-prev d-tall">
+      <p class="d-cap">Preview — ↑ ↓ ← → by day and week, PageUp/PageDown by month</p>
+      <div class="picker d-w280" data-picker>
+        <button type="button" class="input as-button" aria-haspopup="dialog" aria-expanded="false" aria-label="Bedtime date">
+          <span class="date"></span>
+        </button>
+        <div class="cal" role="dialog" aria-label="Bedtime date">
+          <div class="cal__head">
+            <button type="button" class="navbtn" aria-label="Previous month" data-shift="-1">‹</button>
+            <div class="cal__title" aria-live="polite"></div>
+            <button type="button" class="navbtn" aria-label="Next month" data-shift="1">›</button>
+          </div>
+          <div class="cal__dow"></div>
+          <div class="cal__grid" role="grid"></div>
+        </div>
+      </div>
+    </div>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code>&lt;<span class="d-tok-t">DatePicker</span>
+  aria-label=<span class="d-tok-s">"Bedtime date"</span>
+  locale=<span class="d-tok-s">"en-GB"</span>
+  weekStartsOn={1}
+  value={date}
+  onValueChange={setDate}
+/&gt;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>value</td><td>Date</td><td>—</td><td>Pass to control it.</td></tr>
+          <tr><td>defaultValue</td><td>Date</td><td>today</td><td>Today at midnight local time.</td></tr>
+          <tr><td>onValueChange</td><td>(date: Date) =&gt; void</td><td>—</td><td>A new <code>Date</code>, not a mutation of the old one.</td></tr>
+          <tr><td>locale</td><td>string</td><td>'en-GB'</td><td>BCP 47 tag for the month names, weekday initials and trigger label.</td></tr>
+          <tr><td>weekStartsOn</td><td>0 | 1</td><td>1</td><td>1 = Monday, 0 = Sunday.</td></tr>
+          <tr><td>aria-label <span class="d-req">*</span></td><td>string</td><td>—</td><td>Names the trigger and the calendar dialog.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Key</th><th>Does</th></tr></thead>
+        <tbody>
+          <tr><td>ArrowDown (closed)</td><td>Opens the calendar</td></tr>
+          <tr><td>ArrowLeft / ArrowRight</td><td>Moves the cursor a day, paging the month if it crosses a boundary</td></tr>
+          <tr><td>ArrowUp / ArrowDown</td><td>Moves a week</td></tr>
+          <tr><td>PageUp / PageDown</td><td>Moves a month, clamping the day to the last valid one</td></tr>
+          <tr><td>Enter</td><td>Picks the focused day</td></tr>
+          <tr><td>Escape</td><td>Closes and returns focus to the trigger</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ==================== SIGNATURE ==================== -->
+  <div class="d-group" id="signature"><h2>Signature</h2><p>The reason the library exists.</p></div>
+
+  <section class="d-sec" id="ModeToggle">
+    <h3>ModeToggle <span class="d-tag">forwardRef → button</span></h3>
+    <p class="d-lead">
+      The signature control: a slab of glass that lights up from the inside. Turning it on
+      tints the gradient with the accent, blooms a blurred halo underneath, and squishes the
+      slab once — a 0.58s keyframe re-triggered on every press by dropping the class and
+      re-adding it on the next frame.
+    </p>
+    <div class="d-prev d-tall">
+      <p class="d-cap">Preview — flat rack, so you can see the material head-on</p>
+      <div class="stage flat" style="min-height:auto;padding:6px 0">
+        <div class="plate">
+          <div class="rack">
+            <button type="button" class="pill" aria-pressed="true" data-pill style="--accent:var(--sleep)">
+              <span class="bloom" aria-hidden="true"></span>
+              <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14A8 8 0 0 1 10 4a8 8 0 1 0 10 10z"/></svg></span>
+              <span class="txt"><span class="name">Sleep</span><span class="state">Dims at 10:30</span></span>
+              <span class="grip" aria-hidden="true"><i></i><i></i><i></i></span>
+            </button>
+            <button type="button" class="pill" aria-pressed="false" data-pill style="--accent:var(--dnd)">
+              <span class="bloom" aria-hidden="true"></span>
+              <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="m8 8 8 8"/></svg></span>
+              <span class="txt"><span class="name">Do not disturb</span><span class="state">Off</span></span>
+              <span class="grip" aria-hidden="true"><i></i><i></i><i></i></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code>&lt;<span class="d-tok-t">ModeToggle</span>
+  name=<span class="d-tok-s">"Sleep"</span>
+  accent=<span class="d-tok-s">"sleep"</span>
+  icon={&lt;<span class="d-tok-t">MoonIcon</span> /&gt;}
+  onLabel=<span class="d-tok-s">"Dims at 10:30"</span>
+  offLabel=<span class="d-tok-s">"Off"</span>
+  pressed={sleeping}
+  onPressedChange={setSleeping}
+/&gt;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>name <span class="d-req">*</span></td><td>ReactNode</td><td>—</td><td>The large label.</td></tr>
+          <tr><td>onLabel</td><td>ReactNode</td><td>'On'</td><td>Caption under the name while pressed.</td></tr>
+          <tr><td>offLabel</td><td>ReactNode</td><td>'Off'</td><td>Caption while not pressed.</td></tr>
+          <tr><td>icon</td><td>ReactNode</td><td>—</td><td>Goes in the dark 44px chip, which stays dark even when the slab is lit.</td></tr>
+          <tr><td>accent</td><td>Accent</td><td>'sleep'</td><td>The colour it lights up in.</td></tr>
+          <tr><td>pressed</td><td>boolean</td><td>—</td><td>Pass to control it.</td></tr>
+          <tr><td>defaultPressed</td><td>boolean</td><td>false</td><td>—</td></tr>
+          <tr><td>onPressedChange</td><td>(pressed: boolean) =&gt; void</td><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="d-sec" id="ModeRack">
+    <h3>ModeRack</h3>
+    <p class="d-lead">
+      The tilted tray the mode toggles sit on: a 3D plate rotated back 54° with each child
+      lifted on its own <code>translateZ</code>, so the slabs stack in real depth. Pass
+      <code>flat</code> to lay it down — which is what the preview above uses.
+    </p>
+    <div class="d-prev">
+      <p class="d-cap">Preview — the tilted default</p>
+      <div class="stage" style="min-height:340px">
+        <div class="plate">
+          <div class="rack">
+            <button type="button" class="pill" aria-pressed="true" data-pill style="--accent:var(--sleep)">
+              <span class="bloom" aria-hidden="true"></span>
+              <span class="txt"><span class="name">Sleep</span><span class="state">Dims at 10:30</span></span>
+              <span class="grip" aria-hidden="true"><i></i><i></i><i></i></span>
+            </button>
+            <button type="button" class="pill" aria-pressed="false" data-pill style="--accent:var(--dnd)">
+              <span class="bloom" aria-hidden="true"></span>
+              <span class="txt"><span class="name">Do not disturb</span><span class="state">Off</span></span>
+              <span class="grip" aria-hidden="true"><i></i><i></i><i></i></span>
+            </button>
+            <button type="button" class="pill" aria-pressed="true" data-pill style="--accent:var(--personal)">
+              <span class="bloom" aria-hidden="true"></span>
+              <span class="txt"><span class="name">Personal</span><span class="state">Work apps hidden</span></span>
+              <span class="grip" aria-hidden="true"><i></i><i></i><i></i></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code>&lt;<span class="d-tok-t">ModeRack</span>&gt;
+  &lt;<span class="d-tok-t">ModeToggle</span> name=<span class="d-tok-s">"Sleep"</span> accent=<span class="d-tok-s">"sleep"</span> /&gt;
+  &lt;<span class="d-tok-t">ModeToggle</span> name=<span class="d-tok-s">"Do not disturb"</span> accent=<span class="d-tok-s">"dnd"</span> /&gt;
+  &lt;<span class="d-tok-t">ModeToggle</span> name=<span class="d-tok-s">"Personal"</span> accent=<span class="d-tok-s">"personal"</span> /&gt;
+&lt;/<span class="d-tok-t">ModeRack</span>&gt;</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>flat</td><td>boolean</td><td>false</td><td>Lays the rack flat instead of tilting it back in 3D. Children stack vertically at full width.</td></tr>
+          <tr><td>children</td><td>ReactNode</td><td>—</td><td>The first three get decreasing lift; a fourth sits flat.</td></tr>
+          <tr><td>…rest</td><td>HTMLAttributes&lt;HTMLDivElement&gt;</td><td>—</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="d-note d-warn">
+      The tilt is <code>rotateX(54deg) rotateZ(-36deg)</code> on a real 3D plate, so anything
+      you nest inside inherits the perspective. Put popovers and menus outside the rack.
+    </div>
+  </section>
+
+  <!-- ==================== UTILITIES ==================== -->
+  <div class="d-group" id="utilities"><h2>Utilities</h2><p>Exported because they're useful outside the library too.</p></div>
+
+  <section class="d-sec" id="cx">
+    <h3>cx <span class="d-tag">function</span></h3>
+    <p class="d-lead">
+      Join class names, dropping anything falsy. Thirty lines shorter than a dependency and
+      does the same job for the conditional-class case.
+    </p>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code><span class="d-tok-t">cx</span>(<span class="d-tok-s">'card'</span>, isOpen &amp;&amp; <span class="d-tok-s">'open'</span>, className)
+<span class="d-tok-c">// 'card open my-class'  →  falsy parts are dropped</span></code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Signature</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>cx(...parts: Array&lt;string | false | null | undefined&gt;): string</td><td>No object or array syntax — deliberately. If you need that, reach for <code>clsx</code>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="d-sec" id="useControllableState">
+    <h3>useControllableState <span class="d-tag">hook</span></h3>
+    <p class="d-lead">
+      State a consumer may or may not want to own — the hook behind every stateful component
+      here. Pass <code>value</code> to control it, leave it out to let the component keep its
+      own. The setter always calls <code>onChange</code>, whether controlled or not.
+    </p>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code><span class="d-tok-k">const</span> [on, setOn] = <span class="d-tok-t">useControllableState</span>({
+  value: checked,             <span class="d-tok-c">// undefined ⇒ uncontrolled</span>
+  defaultValue: <span class="d-tok-k">false</span>,
+  onChange: onCheckedChange,
+});</code></pre>
+    </div>
+    <div class="d-props">
+      <table>
+        <thead><tr><th>Option</th><th>Type</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>value</td><td>T | undefined</td><td><code>undefined</code> is the switch: anything else means controlled.</td></tr>
+          <tr><td>defaultValue <span class="d-req">*</span></td><td>T</td><td>Required — the uncontrolled starting value.</td></tr>
+          <tr><td>onChange</td><td>(next: T) =&gt; void</td><td>Called on every set, in both modes.</td></tr>
+          <tr><td><i>returns</i></td><td>[T, (next: T) =&gt; void]</td><td>Value and setter, like <code>useState</code>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="d-note d-warn">
+      Don't switch a component between controlled and uncontrolled mid-life. Going from a
+      real value to <code>undefined</code> silently hands control back to stale internal
+      state.
+    </div>
+  </section>
+
+  <section class="d-sec" id="Accent">
+    <h3>Accent <span class="d-tag">type</span></h3>
+    <p class="d-lead">
+      <code>'sleep' | 'dnd' | 'personal'</code> — the three named accents. Passing
+      <code>accent</code> sets <code>--accent</code> to <code>var(--sleep)</code> and so on,
+      which is why overriding the token in CSS re-colours every component that uses it.
+    </p>
+    <div class="d-prev">
+      <p class="d-cap">Preview — the same toggle in all three</p>
+      <div class="d-row">
+        <button class="tgl wide" aria-pressed="true" data-toggle style="--accent:var(--sleep)">sleep</button>
+        <button class="tgl wide" aria-pressed="true" data-toggle style="--accent:var(--dnd)">dnd</button>
+        <button class="tgl wide" aria-pressed="true" data-toggle style="--accent:var(--personal)">personal</button>
+      </div>
+    </div>
+    <div class="d-code">
+      <button class="d-copy">Copy</button>
+      <pre><code><span class="d-tok-k">import type</span> { <span class="d-tok-t">Accent</span> } <span class="d-tok-k">from</span> <span class="d-tok-s">'liquid-glass-ui'</span>;
+
+<span class="d-tok-c">// accentStyle(accent) → { '--accent': 'var(--sleep)' }</span>
+&lt;<span class="d-tok-t">Switch</span> label=<span class="d-tok-s">"Silence calls"</span> accent=<span class="d-tok-s">"dnd"</span> /&gt;
+
+<span class="d-tok-c">// or set the property yourself, for a colour outside the three</span>
+&lt;div style={{ <span class="d-tok-s">'--accent'</span>: <span class="d-tok-s">'#7C5CFF'</span> }}&gt;…&lt;/div&gt;</code></pre>
+    </div>
+  </section>
+
+  <footer style="margin-top:80px;padding-top:26px;border-top:1px solid var(--hair);font-size:13px;color:var(--ink-soft)">
+    <p style="margin:0 0 6px"><b style="color:var(--ink)">liquid-glass-ui</b> · MIT · 30 components, one stylesheet.</p>
+    <p style="margin:0">Generated from the source in <code>src/</code>. Previews use the library's own CSS, so this page is always as current as the stylesheet beside it.</p>
+  </footer>
+
+</main>
+</div>
+
+<!-- ============================ dialogs used by the previews ============================ -->
+<dialog id="dDialogDemo">
+  <div class="sheet">
+    <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14A8 8 0 0 1 10 4a8 8 0 1 0 10 10z"/></svg></span>
+    <h3>Set a bedtime</h3>
+    <p>Sleep starts 30 minutes before, easing the screen down so the change is gradual.</p>
+    <div class="fields">
+      <div class="field">
+        <div class="input"><span class="lead" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 7v5l3 2"/><circle cx="12" cy="12" r="9"/></svg></span><input value="22:30" /></div>
+      </div>
+    </div>
+    <div class="row">
+      <button type="button" class="push" data-close>Not now</button>
+      <button type="button" class="push primary" data-close>Save</button>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="dAlertDemo" aria-labelledby="dAlertTitle">
+  <div class="sheet" role="alertdialog" aria-modal="true" aria-labelledby="dAlertTitle" style="--accent:var(--dnd)">
+    <h3 id="dAlertTitle">Delete this mode?</h3>
+    <p>Its schedule and app list go with it. This can't be undone.</p>
+    <div class="row">
+      <button type="button" class="push" data-close>Cancel</button>
+      <button type="button" class="push danger" data-close>Delete</button>
+    </div>
+  </div>
+</dialog>
+
+<div class="toasts" id="dToasts" aria-live="polite"></div>
+
+<script>
+(function () {
+  'use strict';
+  var $  = function (sel, root) { return (root || document).querySelector(sel); };
+  var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
+
+  /* ---------------- theme ---------------- */
+  var root = document.documentElement;
+  var themeBtn = $('#dTheme');
+  var themeRead = $('#dThemeRead');
+  function setTheme(next) {
+    root.dataset.theme = next;
+    themeBtn.textContent = next === 'dark' ? 'Dark' : 'Light';
+    themeBtn.setAttribute('aria-pressed', String(next === 'dark'));
+    if (themeRead) themeRead.textContent = next;
+    try { localStorage.setItem('lgui-docs-theme', next); } catch (e) {}
+  }
+  var stored = null;
+  try { stored = localStorage.getItem('lgui-docs-theme'); } catch (e) {}
+  setTheme(stored || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'));
+  themeBtn.addEventListener('click', function () {
+    setTheme(root.dataset.theme === 'dark' ? 'light' : 'dark');
+  });
+  $$('[data-theme-set]').forEach(function (btn) {
+    btn.addEventListener('click', function () { setTheme(btn.dataset.themeSet); });
+  });
+
+  /* ---------------- sidebar ---------------- */
+  var nav = $('#dNav');
+  var navToggle = $('#dNavToggle');
+  navToggle.addEventListener('click', function () {
+    var open = nav.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', String(open));
+  });
+  nav.addEventListener('click', function (e) {
+    if (e.target.closest('a')) nav.classList.remove('open');
+  });
+
+  var links = $$('.d-nav a');
+  var byId = {};
+  links.forEach(function (a) { byId[a.getAttribute('href').slice(1)] = a; });
+  var spy = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      var link = byId[entry.target.id];
+      if (!link) return;
+      if (entry.isIntersecting) {
+        links.forEach(function (a) { a.classList.remove('on'); });
+        link.classList.add('on');
+      }
+    });
+  }, { rootMargin: '-10% 0px -75% 0px' });
+  $$('.d-sec, .d-group').forEach(function (el) { if (el.id) spy.observe(el); });
+
+  /* ---------------- copy buttons ---------------- */
+  $$('.d-copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var code = btn.parentElement.querySelector('code');
+      navigator.clipboard.writeText(code.innerText).then(function () {
+        btn.textContent = 'Copied';
+        setTimeout(function () { btn.textContent = 'Copy'; }, 1400);
+      });
+    });
+  });
+
+  /* ---------------- Toggle / IconButton ---------------- */
+  $$('[data-toggle]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      btn.setAttribute('aria-pressed', btn.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+    });
+  });
+
+  /* ToggleGroup type="single" */
+  $$('.tg[data-single] .tgl').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var on = btn.getAttribute('aria-pressed') === 'true';
+      $$('.tgl', btn.parentElement).forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
+      btn.setAttribute('aria-pressed', on ? 'false' : 'true');
+    });
+  });
+
+  /* ---------------- ModeToggle ---------------- */
+  $$('[data-pill]').forEach(function (pill) {
+    var state = pill.querySelector('.state');
+    var onLabel = state ? state.textContent : '';
+    var offLabel = 'Off';
+    if (pill.getAttribute('aria-pressed') !== 'true') { offLabel = onLabel; onLabel = 'On'; }
+    pill.addEventListener('click', function () {
+      var next = pill.getAttribute('aria-pressed') !== 'true';
+      pill.setAttribute('aria-pressed', String(next));
+      if (state) state.textContent = next ? onLabel : offLabel;
+      pill.classList.remove('wob');
+      requestAnimationFrame(function () { pill.classList.add('wob'); });
+    });
+    pill.addEventListener('animationend', function () { pill.classList.remove('wob'); });
+  });
+
+  /* ---------------- Segmented ---------------- */
+  function moveThumb(seg) {
+    var thumb = seg.querySelector('.thumb');
+    var buttons = $$('button', seg);
+    if (!thumb || !buttons.length) return;
+    var index = Math.max(0, buttons.findIndex(function (b) { return b.getAttribute('aria-selected') === 'true'; }));
+    var width = (seg.clientWidth - 10) / buttons.length;
+    thumb.style.width = width + 'px';
+    thumb.style.transform = 'translateX(' + (5 + index * width) + 'px)';
+  }
+  $$('[data-seg]').forEach(function (seg) {
+    $$('button', seg).forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        $$('button', seg).forEach(function (b) { b.setAttribute('aria-selected', 'false'); });
+        btn.setAttribute('aria-selected', 'true');
+        moveThumb(seg);
+      });
+    });
+  });
+
+  /* ---------------- Tabs ---------------- */
+  function moveInk(wrap) {
+    var list = wrap.querySelector('.tabs');
+    var ink = wrap.querySelector('.ink');
+    var active = list.querySelector('[aria-selected="true"]');
+    if (!ink || !active) return;
+    ink.style.width = active.offsetWidth + 'px';
+    ink.style.transform = 'translateX(' + active.offsetLeft + 'px)';
+  }
+  $$('[data-tabs]').forEach(function (wrap) {
+    var tabs = $$('[role="tab"]', wrap);
+    var panels = $$('[role="tabpanel"]', wrap);
+    function select(index) {
+      tabs.forEach(function (t, i) {
+        t.setAttribute('aria-selected', String(i === index));
+        t.tabIndex = i === index ? 0 : -1;
+      });
+      panels.forEach(function (p, i) { p.hidden = i !== index; });
+      moveInk(wrap);
+    }
+    tabs.forEach(function (tab, i) {
+      tab.addEventListener('click', function () { select(i); });
+    });
+    wrap.querySelector('.tabs').addEventListener('keydown', function (e) {
+      var delta = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+      if (!delta) return;
+      e.preventDefault();
+      var current = tabs.findIndex(function (t) { return t.getAttribute('aria-selected') === 'true'; });
+      var next = (current + delta + tabs.length) % tabs.length;
+      select(next);
+      tabs[next].focus();
+    });
+  });
+
+  /* ---------------- Accordion + Collapsible ---------------- */
+  $$('[data-acc]').forEach(function (acc) {
+    var single = acc.hasAttribute('data-single');
+    $$('.acc__trig', acc).forEach(function (trig) {
+      trig.addEventListener('click', function () {
+        var item = trig.closest('.acc__item');
+        var open = item.classList.contains('open');
+        if (single) {
+          $$('.acc__item', acc).forEach(function (other) {
+            other.classList.remove('open');
+            other.querySelector('.acc__trig').setAttribute('aria-expanded', 'false');
+          });
+        }
+        item.classList.toggle('open', !open);
+        trig.setAttribute('aria-expanded', String(!open));
+      });
+    });
+  });
+  $$('[data-collapsible]').forEach(function (item) {
+    var btn = item.querySelector('button');
+    var closed = btn.textContent;
+    var opened = btn.dataset.openLabel || closed;
+    btn.addEventListener('click', function () {
+      var open = !item.classList.contains('open');
+      item.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', String(open));
+      btn.textContent = open ? opened : closed;
+    });
+  });
+
+  /* ---------------- Select ---------------- */
+  $$('[data-drop]').forEach(function (drop) {
+    var trigger = drop.querySelector('.trigger');
+    var value = drop.querySelector('.val');
+    trigger.addEventListener('click', function () {
+      var open = drop.classList.toggle('open');
+      trigger.setAttribute('aria-expanded', String(open));
+    });
+    $$('.opt', drop).forEach(function (opt) {
+      opt.addEventListener('click', function () {
+        $$('.opt', drop).forEach(function (o) { o.setAttribute('aria-selected', 'false'); });
+        opt.setAttribute('aria-selected', 'true');
+        value.textContent = opt.childNodes[1].textContent.trim();
+        drop.classList.remove('open');
+        trigger.setAttribute('aria-expanded', 'false');
+        trigger.focus();
+      });
+    });
+    drop.addEventListener('keydown', function (e) {
+      if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+      e.preventDefault();
+      if (!drop.classList.contains('open')) {
+        drop.classList.add('open');
+        trigger.setAttribute('aria-expanded', 'true');
+        return;
+      }
+      var opts = $$('.opt', drop);
+      var at = opts.indexOf(document.activeElement);
+      var next = (at + (e.key === 'ArrowDown' ? 1 : -1) + opts.length) % opts.length;
+      opts[next < 0 ? 0 : next].focus();
+    });
+  });
+
+  /* ---------------- Popover / DropdownMenu ---------------- */
+  $$('[data-pop]').forEach(function (wrap) {
+    var trigger = wrap.querySelector('button');
+    var panel = wrap.querySelector('.pop');
+    trigger.addEventListener('click', function () {
+      var open = panel.classList.toggle('open');
+      trigger.setAttribute('aria-expanded', String(open));
+      if (open) {
+        var first = panel.querySelector('.item:not([disabled])');
+        if (first) first.focus();
+      }
+    });
+    panel.addEventListener('keydown', function (e) {
+      var delta = e.key === 'ArrowDown' ? 1 : e.key === 'ArrowUp' ? -1 : 0;
+      if (!delta) return;
+      e.preventDefault();
+      var items = $$('.item:not([disabled])', panel);
+      var at = items.indexOf(document.activeElement);
+      items[(at + delta + items.length) % items.length].focus();
+    });
+  });
+
+  /* ---------------- HoverCard ---------------- */
+  $$('[data-hc]').forEach(function (hc) {
+    var panel = hc.querySelector('.pop');
+    var timer;
+    function schedule(open, delay) {
+      clearTimeout(timer);
+      timer = setTimeout(function () { panel.classList.toggle('open', open); }, delay);
+    }
+    hc.addEventListener('mouseenter', function () { schedule(true, 170); });
+    hc.addEventListener('mouseleave', function () { schedule(false, 140); });
+    hc.querySelector('.hc__trig').addEventListener('focus', function () { schedule(true, 170); });
+    hc.querySelector('.hc__trig').addEventListener('blur', function () { schedule(false, 140); });
+  });
+
+  /* ---------------- dismiss on outside click / Escape ---------------- */
+  document.addEventListener('mousedown', function (e) {
+    $$('.drop.open').forEach(function (d) {
+      if (!d.contains(e.target)) {
+        d.classList.remove('open');
+        d.querySelector('.trigger').setAttribute('aria-expanded', 'false');
+      }
+    });
+    $$('[data-pop]').forEach(function (w) {
+      if (!w.contains(e.target)) {
+        w.querySelector('.pop').classList.remove('open');
+        w.querySelector('button').setAttribute('aria-expanded', 'false');
+      }
+    });
+    $$('.picker.open').forEach(function (p) {
+      if (!p.contains(e.target)) {
+        p.classList.remove('open');
+        p.querySelector('.as-button').setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    $$('.drop.open, .picker.open').forEach(function (el) {
+      el.classList.remove('open');
+      var t = el.querySelector('.trigger, .as-button');
+      if (t) { t.setAttribute('aria-expanded', 'false'); t.focus(); }
+    });
+    $$('[data-pop] .pop.open').forEach(function (p) {
+      p.classList.remove('open');
+      var t = p.parentElement.querySelector('button');
+      t.setAttribute('aria-expanded', 'false');
+      t.focus();
+    });
+  });
+
+  /* ---------------- Slider ---------------- */
+  var THUMB = 40;
+  function paint(slider) {
+    var input = slider.querySelector('input');
+    var min = Number(input.min || 0), max = Number(input.max || 100);
+    var width = input.clientWidth;
+    if (!width) return;
+    var ratio = (Number(input.value) - min) / ((max - min) || 1);
+    slider.style.setProperty('--p', (input.offsetLeft + THUMB / 2 + (width - THUMB) * ratio) + 'px');
+  }
+  $$('[data-slider]').forEach(function (slider) {
+    slider.querySelector('input').addEventListener('input', function () { paint(slider); });
+  });
+
+  /* ---------------- indeterminate checkbox ---------------- */
+  $$('[data-indeterminate]').forEach(function (box) { box.indeterminate = true; });
+
+  /* ---------------- Dialog ---------------- */
+  $$('[data-dialog]').forEach(function (btn) {
+    btn.addEventListener('click', function () { $('#' + btn.dataset.dialog).showModal(); });
+  });
+  $$('dialog').forEach(function (dlg) {
+    dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+    $$('[data-close]', dlg).forEach(function (b) {
+      b.addEventListener('click', function () { dlg.close(); });
+    });
+  });
+
+  /* ---------------- Toast ---------------- */
+  var TONES = { info: 'var(--sleep)', success: 'var(--ok)', warning: 'var(--personal)', danger: 'var(--dnd)' };
+  var COPY = {
+    info: ['Sleep scheduled', 'Starts at 22:30 tonight.'],
+    success: ['Saved', 'Your changes are on every device.'],
+    warning: ['Battery low', 'Sleep will end early at this rate.'],
+    danger: ['Couldn’t sync', 'We’ll retry when you’re back online.'],
+    action: ['Mode deleted', 'Personal and its app list are gone.']
+  };
+  var viewport = $('#dToasts');
+  function toast(kind) {
+    var tone = kind === 'action' ? 'info' : kind;
+    var copy = COPY[kind];
+    var duration = 4500;
+    var el = document.createElement('div');
+    el.className = 'toast';
+    el.setAttribute('role', 'status');
+    el.style.setProperty('--accent', TONES[tone]);
+    el.style.setProperty('--ms', duration + 'ms');
+    el.innerHTML =
+      '<span class="chip" aria-hidden="true"></span>' +
+      '<span class="txt"><span class="t"></span><span class="d"></span></span>' +
+      (kind === 'action' ? '<button type="button" class="push" style="padding:8px 14px;font-size:12px">Undo</button>' : '') +
+      '<button type="button" class="x" aria-label="Dismiss"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"><path d="m5 5 14 14M19 5 5 19"/></svg></button>' +
+      '<span class="life" aria-hidden="true"></span>';
+    el.querySelector('.t').textContent = copy[0];
+    el.querySelector('.d').textContent = copy[1];
+    function remove() { el.remove(); }
+    $$('button', el).forEach(function (b) { b.addEventListener('click', remove); });
+    viewport.appendChild(el);
+    while (viewport.children.length > 3) viewport.firstElementChild.remove();
+    setTimeout(remove, duration);
+  }
+  $$('[data-toast]').forEach(function (btn) {
+    btn.addEventListener('click', function () { toast(btn.dataset.toast); });
+  });
+
+  /* ---------------- DatePicker ---------------- */
+  $$('[data-picker]').forEach(function (picker) {
+    var LOCALE = 'en-GB', WEEK_START = 1;
+    var trigger = picker.querySelector('.as-button');
+    var label = picker.querySelector('.date');
+    var title = picker.querySelector('.cal__title');
+    var dow = picker.querySelector('.cal__dow');
+    var grid = picker.querySelector('.cal__grid');
+    var today = new Date(); today.setHours(0, 0, 0, 0);
+    var selected = new Date(today);
+    var cursor = new Date(today);
+    var view = new Date(selected.getFullYear(), selected.getMonth(), 1);
+
+    var fmt = function (d) {
+      return d.toLocaleDateString(LOCALE, { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+    };
+    var same = function (a, b) { return a.toDateString() === b.toDateString(); };
+
+    var base = new Date(2024, 0, WEEK_START === 1 ? 1 : 7);
+    for (var i = 0; i < 7; i++) {
+      var d = new Date(base); d.setDate(base.getDate() + i);
+      var span = document.createElement('span');
+      span.textContent = d.toLocaleDateString(LOCALE, { weekday: 'short' });
+      dow.appendChild(span);
+    }
+
+    function render() {
+      label.textContent = fmt(selected);
+      title.innerHTML = view.toLocaleDateString(LOCALE, { month: 'long' }) + ' <span>' + view.getFullYear() + '</span>';
+      grid.innerHTML = '';
+      var offset = (view.getDay() - WEEK_START + 7) % 7;
+      var start = new Date(view); start.setDate(1 - offset);
+      for (var i = 0; i < 42; i++) {
+        var date = new Date(start); date.setDate(start.getDate() + i);
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.setAttribute('role', 'gridcell');
+        btn.setAttribute('aria-label', fmt(date));
+        btn.setAttribute('aria-selected', String(same(date, selected)));
+        btn.tabIndex = same(date, cursor) ? 0 : -1;
+        btn.className = 'day' + (date.getMonth() !== view.getMonth() ? ' mut' : '') + (same(date, cursor) ? ' cursor' : '');
+        btn.textContent = date.getDate();
+        if (same(date, today)) {
+          var mark = document.createElement('span');
+          mark.className = 'mark';
+          mark.setAttribute('aria-hidden', 'true');
+          btn.appendChild(mark);
+        }
+        (function (value) {
+          btn.addEventListener('click', function () {
+            selected = value; cursor = value;
+            view = new Date(value.getFullYear(), value.getMonth(), 1);
+            picker.classList.remove('open');
+            trigger.setAttribute('aria-expanded', 'false');
+            render();
+            trigger.focus();
+          });
+        })(date);
+        grid.appendChild(btn);
+      }
+    }
+
+    function shift(months) {
+      var next = new Date(view.getFullYear(), view.getMonth() + months, 1);
+      var last = new Date(next.getFullYear(), next.getMonth() + 1, 0).getDate();
+      view = next;
+      cursor = new Date(next.getFullYear(), next.getMonth(), Math.min(cursor.getDate(), last));
+      render();
+    }
+    $$('[data-shift]', picker).forEach(function (btn) {
+      btn.addEventListener('click', function (e) { e.stopPropagation(); shift(Number(btn.dataset.shift)); });
+    });
+
+    trigger.addEventListener('click', function () {
+      var open = picker.classList.toggle('open');
+      trigger.setAttribute('aria-expanded', String(open));
+    });
+
+    picker.addEventListener('keydown', function (e) {
+      if (!picker.classList.contains('open')) {
+        if (e.key === 'ArrowDown') { e.preventDefault(); picker.classList.add('open'); trigger.setAttribute('aria-expanded', 'true'); }
+        return;
+      }
+      var step = { ArrowLeft: -1, ArrowRight: 1, ArrowUp: -7, ArrowDown: 7 }[e.key];
+      if (step) {
+        e.preventDefault();
+        var next = new Date(cursor); next.setDate(next.getDate() + step);
+        cursor = next;
+        if (next.getMonth() !== view.getMonth()) view = new Date(next.getFullYear(), next.getMonth(), 1);
+        render();
+        var focused = grid.querySelector('.cursor');
+        if (focused) focused.focus();
+        return;
+      }
+      if (e.key === 'PageUp' || e.key === 'PageDown') {
+        e.preventDefault();
+        shift(e.key === 'PageUp' ? -1 : 1);
+        var cell = grid.querySelector('.cursor');
+        if (cell) cell.focus();
+      }
+    });
+
+    render();
+  });
+
+  /* ---------------- DataTable ---------------- */
+  (function () {
+    var host = $('#dTableDemo');
+    if (!host) return;
+    var ROWS = [
+      { id: 'sleep', name: 'Sleep', owner: 'Ada Lovelace', uses: 412, state: 'On', color: 'var(--sleep)' },
+      { id: 'dnd', name: 'Do not disturb', owner: 'Grace Hopper', uses: 288, state: 'On', color: 'var(--dnd)' },
+      { id: 'personal', name: 'Personal', owner: 'Alan Turing', uses: 164, state: 'Off', color: 'var(--personal)' },
+      { id: 'focus', name: 'Deep focus', owner: 'Ada Lovelace', uses: 97, state: 'On', color: 'var(--sleep)' },
+      { id: 'drive', name: 'Driving', owner: 'Katherine Johnson', uses: 51, state: 'Off', color: 'var(--ok)' },
+      { id: 'gym', name: 'Workout', owner: 'Grace Hopper', uses: 44, state: 'Off', color: 'var(--personal)' },
+      { id: 'read', name: 'Reading', owner: 'Alan Turing', uses: 23, state: 'On', color: 'var(--sleep)' }
+    ];
+    var COLUMNS = [
+      { key: 'name', header: 'Mode', cell: function (r) { return '<span class="cell"><span class="pip" style="--accent:' + r.color + '"></span>' + r.name + '</span>'; } },
+      { key: 'owner', header: 'Owner', className: 'muted' },
+      { key: 'state', header: 'State', cell: function (r) { return '<span class="badge"><i style="--bc:' + (r.state === 'On' ? 'var(--ok)' : 'var(--ink-soft)') + '"></i>' + r.state + '</span>'; } },
+      { key: 'uses', header: 'Uses', sortValue: function (r) { return r.uses; }, cell: function (r) { return r.uses + '×'; } }
+    ];
+    var PAGE_SIZE = 4;
+    var query = '', sort = null, page = 1, picked = [];
+
+    function view() {
+      var term = query.trim().toLowerCase();
+      var list = ROWS.filter(function (r) {
+        return !term || (r.name + ' ' + r.owner).toLowerCase().indexOf(term) !== -1;
+      });
+      if (sort) {
+        var column = COLUMNS.filter(function (c) { return c.key === sort.key; })[0];
+        if (column) {
+          var value = function (r) { return column.sortValue ? column.sortValue(r) : String(r[column.key] || '').toLowerCase(); };
+          list = list.slice().sort(function (a, b) {
+            var x = value(a), y = value(b);
+            return (x < y ? -1 : x > y ? 1 : 0) * sort.dir;
+          });
+        }
+      }
+      return list;
+    }
+
+    function render() {
+      var list = view();
+      var pages = Math.max(1, Math.ceil(list.length / PAGE_SIZE));
+      var current = Math.min(page, pages);
+      var from = (current - 1) * PAGE_SIZE;
+      var slice = list.slice(from, from + PAGE_SIZE);
+      var pageIds = slice.map(function (r) { return r.id; });
+      var onPage = pageIds.filter(function (id) { return picked.indexOf(id) !== -1; }).length;
+      var allOnPage = slice.length > 0 && onPage === slice.length;
+
+      var html = '';
+      html += '<div class="tbl__top"><div class="search"><div class="input">';
+      html += '<input type="search" aria-label="Search" placeholder="Search" value="' + query.replace(/"/g, '&quot;') + '" /></div></div></div>';
+
+      if (picked.length) {
+        html += '<div class="tbl__sel">' + picked.length + ' selected<span class="spacer"></span>';
+        html += '<button type="button" class="push" data-clear-sel>Clear</button></div>';
+      }
+
+      html += '<div class="tbl__wrap"><table aria-label="Modes"><thead><tr>';
+      html += '<th scope="col"><label class="ctl" style="padding:0"><input type="checkbox" aria-label="Select all on this page" data-all' + (allOnPage ? ' checked' : '') + ' /><span class="box" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7"/></svg></span></label></th>';
+      COLUMNS.forEach(function (c) {
+        var active = sort && sort.key === c.key;
+        html += '<th scope="col"' + (active ? ' aria-sort="' + (sort.dir === 1 ? 'ascending' : 'descending') + '"' : '') + (c.className ? ' class="' + c.className + '"' : '') + '>';
+        html += '<button type="button" class="sorter" data-sort="' + c.key + '">' + c.header;
+        html += '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 15 6-6 6 6"/></svg></button></th>';
+      });
+      html += '</tr></thead><tbody>';
+      slice.forEach(function (r) {
+        var on = picked.indexOf(r.id) !== -1;
+        html += '<tr' + (on ? ' class="on"' : '') + '>';
+        html += '<td><label class="ctl" style="padding:0"><input type="checkbox" aria-label="Select ' + r.name + '" data-row="' + r.id + '"' + (on ? ' checked' : '') + ' /><span class="box" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7"/></svg></span></label></td>';
+        COLUMNS.forEach(function (c) {
+          html += '<td' + (c.className ? ' class="' + c.className + '"' : '') + '>' + (c.cell ? c.cell(r) : r[c.key]) + '</td>';
+        });
+        html += '</tr>';
+      });
+      html += '</tbody></table>';
+
+      if (!list.length) {
+        html += '<div class="tbl__empty"><p>Nothing matches “' + query + '”.</p>';
+        html += '<button type="button" class="push" data-clear-query>Clear search</button></div>';
+      }
+      html += '</div>';
+
+      if (list.length) {
+        html += '<div class="pager"><span class="range">' + (from + 1) + '–' + (from + slice.length) + ' of ' + list.length + '</span>';
+        html += '<button type="button" class="pg" aria-label="Previous page" data-page="' + (current - 1) + '"' + (current === 1 ? ' disabled' : '') + '>‹</button>';
+        for (var i = 1; i <= pages; i++) {
+          html += '<button type="button" class="pg"' + (current === i ? ' aria-current="page"' : '') + ' data-page="' + i + '">' + i + '</button>';
+        }
+        html += '<button type="button" class="pg" aria-label="Next page" data-page="' + (current + 1) + '"' + (current === pages ? ' disabled' : '') + '>›</button></div>';
+      }
+
+      host.innerHTML = html;
+      page = current;
+
+      var all = host.querySelector('[data-all]');
+      if (all) all.indeterminate = onPage > 0 && !allOnPage;
+
+      var search = host.querySelector('input[type="search"]');
+      search.addEventListener('input', function () {
+        query = search.value; page = 1; render();
+        var again = host.querySelector('input[type="search"]');
+        again.focus();
+        again.setSelectionRange(again.value.length, again.value.length);
+      });
+
+      $$('[data-sort]', host).forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var key = btn.dataset.sort;
+          sort = sort && sort.key === key ? { key: key, dir: sort.dir === 1 ? -1 : 1 } : { key: key, dir: 1 };
+          page = 1; render();
+        });
+      });
+      $$('[data-page]', host).forEach(function (btn) {
+        btn.addEventListener('click', function () { page = Number(btn.dataset.page); render(); });
+      });
+      $$('[data-row]', host).forEach(function (box) {
+        box.addEventListener('change', function () {
+          var id = box.dataset.row;
+          picked = box.checked ? picked.concat([id]) : picked.filter(function (v) { return v !== id; });
+          render();
+        });
+      });
+      if (all) {
+        all.addEventListener('change', function () {
+          picked = all.checked
+            ? picked.concat(pageIds.filter(function (id) { return picked.indexOf(id) === -1; }))
+            : picked.filter(function (id) { return pageIds.indexOf(id) === -1; });
+          render();
+        });
+      }
+      var clearSel = host.querySelector('[data-clear-sel]');
+      if (clearSel) clearSel.addEventListener('click', function () { picked = []; render(); });
+      var clearQuery = host.querySelector('[data-clear-query]');
+      if (clearQuery) clearQuery.addEventListener('click', function () { query = ''; render(); });
+    }
+    render();
+  })();
+
+  /* ---------------- layout passes ---------------- */
+  function layout() {
+    $$('[data-seg]').forEach(moveThumb);
+    $$('[data-tabs]').forEach(moveInk);
+    $$('[data-slider]').forEach(paint);
+  }
+  layout();
+  window.addEventListener('resize', layout);
+  window.addEventListener('load', layout);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
+})();
+</script>
+
+</body>
+</html>
