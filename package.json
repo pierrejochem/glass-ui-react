@@ -1,5 +1,5 @@
 {
-  "name": "liquid-glass-ui",
+  "name": "glass-ui-react",
   "version": "0.1.0",
   "author": "Pierre Jochem <pierrejochem@msn.com>",
   "description": "A React component library built on one material: translucent glass that lights up when it's on.",
@@ -54,9 +54,9 @@
     "vitest": "^2.1.8"
   },
   "keywords": ["react", "components", "ui", "glass", "design-system", "accessible"],
-  "homepage": "https://pierrejochem.github.io/liquid-glass-ui/",
-  "repository": { "type": "git", "url": "git+https://github.com/pierrejochem/liquid-glass-ui.git" },
-  "bugs": { "url": "https://github.com/pierrejochem/liquid-glass-ui/issues" },
+  "homepage": "https://pierrejochem.github.io/glass-ui-react/",
+  "repository": { "type": "git", "url": "git+https://github.com/pierrejochem/glass-ui-react.git" },
+  "bugs": { "url": "https://github.com/pierrejochem/glass-ui-react/issues" },
   "publishConfig": { "access": "public", "provenance": true },
   "engines": { "node": ">=18" }
 }

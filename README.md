@@ -1,4 +1,4 @@
-# liquid-glass-ui
+# glass-ui-react
 
 A React component library built on one material: translucent glass that lights up when it's on.
 
@@ -6,16 +6,16 @@ Every surface is see-through and blurs what's behind it. Things you press are ra
 things you pour text into are recessed. That one rule is what makes 30 components read
 as a single object rather than a pile of unrelated shapes.
 
-**[Read the docs →](https://pierrejochem.github.io/liquid-glass-ui/)** — every component, prop and
+**[Read the docs →](https://pierrejochem.github.io/glass-ui-react/)** — every component, prop and
 type, with live previews.
 
 ```bash
-npm install liquid-glass-ui
+npm install glass-ui-react
 ```
 
 ```tsx
-import { ThemeProvider, ToastProvider, ModeRack, ModeToggle } from 'liquid-glass-ui';
-import 'liquid-glass-ui/styles.css';
+import { ThemeProvider, ToastProvider, ModeRack, ModeToggle } from 'glass-ui-react';
+import 'glass-ui-react/styles.css';
 
 export function App() {
   return (

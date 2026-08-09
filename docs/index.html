@@ -3,41 +3,41 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>liquid-glass-ui — React glass UI component library docs</title>
-<meta name="description" content="Documentation for liquid-glass-ui, a React component library of 30 translucent glass components — every component, prop and type, with live previews." />
+<title>glass-ui-react — React glass UI component library docs</title>
+<meta name="description" content="Documentation for glass-ui-react, a React component library of 30 translucent glass components — every component, prop and type, with live previews." />
 
 <!-- One page, one address. Without the canonical, the ?query and #anchor
      variants people link to each get indexed as a separate page. -->
-<link rel="canonical" href="https://pierrejochem.github.io/liquid-glass-ui/" />
+<link rel="canonical" href="https://pierrejochem.github.io/glass-ui-react/" />
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
 <meta name="author" content="Pierre Jochem" />
 <meta name="theme-color" content="#070708" />
 
 <!-- Link previews: chat apps and social cards read these, not <title> -->
 <meta property="og:type" content="website" />
-<meta property="og:site_name" content="liquid-glass-ui" />
-<meta property="og:url" content="https://pierrejochem.github.io/liquid-glass-ui/" />
-<meta property="og:title" content="liquid-glass-ui — React glass UI component library" />
+<meta property="og:site_name" content="glass-ui-react" />
+<meta property="og:url" content="https://pierrejochem.github.io/glass-ui-react/" />
+<meta property="og:title" content="glass-ui-react — React glass UI component library" />
 <meta property="og:description" content="30 translucent glass components for React. Every component, prop and type, with live previews." />
-<meta property="og:image" content="https://pierrejochem.github.io/liquid-glass-ui/og.png" />
+<meta property="og:image" content="https://pierrejochem.github.io/glass-ui-react/og.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="liquid-glass-ui — glass that lights up when it's on. 30 components, TypeScript, MIT." />
+<meta property="og:image:alt" content="glass-ui-react — glass that lights up when it's on. 30 components, TypeScript, MIT." />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="liquid-glass-ui — React glass UI component library" />
+<meta name="twitter:title" content="glass-ui-react — React glass UI component library" />
 <meta name="twitter:description" content="30 translucent glass components for React. Every component, prop and type, with live previews." />
-<meta name="twitter:image" content="https://pierrejochem.github.io/liquid-glass-ui/og.png" />
+<meta name="twitter:image" content="https://pierrejochem.github.io/glass-ui-react/og.png" />
 
 <!-- Machine-readable version of the same facts, for search and answer engines -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "SoftwareSourceCode",
-  "name": "liquid-glass-ui",
+  "name": "glass-ui-react",
   "description": "A React component library built on one material: translucent glass that lights up when it's on. 30 accessible components sharing a single visual rule.",
-  "url": "https://pierrejochem.github.io/liquid-glass-ui/",
-  "image": "https://pierrejochem.github.io/liquid-glass-ui/og.png",
-  "codeRepository": "https://github.com/pierrejochem/liquid-glass-ui",
+  "url": "https://pierrejochem.github.io/glass-ui-react/",
+  "image": "https://pierrejochem.github.io/glass-ui-react/og.png",
+  "codeRepository": "https://github.com/pierrejochem/glass-ui-react",
   "programmingLanguage": "TypeScript",
   "runtimePlatform": "React",
   "license": "https://opensource.org/licenses/MIT",
@@ -237,7 +237,7 @@ body{font-family:"Manrope",ui-sans-serif,system-ui,sans-serif}
 
 <!-- ============================ sidebar ============================ -->
 <nav class="d-nav" id="dNav" aria-label="Documentation">
-  <p class="d-brand"><span class="d-dot"></span><b>liquid-glass-ui</b></p>
+  <p class="d-brand"><span class="d-dot"></span><b>glass-ui-react</b></p>
   <p class="d-ver">v0.1.0 · 30 components</p>
 
   <p class="d-navgroup">Start</p>
@@ -314,7 +314,7 @@ body{font-family:"Manrope",ui-sans-serif,system-ui,sans-serif}
 
   <header class="d-top">
     <div class="d-titles">
-      <h1 class="d-h1">liquid-glass-ui documentation</h1>
+      <h1 class="d-h1">glass-ui-react documentation</h1>
       <p class="d-sub">
         A React component library built on one material: translucent glass that lights up
         when it's on. Things you press are raised; things you pour text into are recessed.
@@ -346,12 +346,12 @@ body{font-family:"Manrope",ui-sans-serif,system-ui,sans-serif}
     </p>
     <div class="d-code">
       <button class="d-copy">Copy</button>
-      <pre><code>npm install liquid-glass-ui</code></pre>
+      <pre><code>npm install glass-ui-react</code></pre>
     </div>
     <p class="d-lead">Import the stylesheet exactly once, at the root of your app:</p>
     <div class="d-code">
       <button class="d-copy">Copy</button>
-      <pre><code><span class="d-tok-k">import</span> <span class="d-tok-s">'liquid-glass-ui/styles.css'</span>;</code></pre>
+      <pre><code><span class="d-tok-k">import</span> <span class="d-tok-s">'glass-ui-react/styles.css'</span>;</code></pre>
     </div>
     <div class="d-props">
       <table>
@@ -375,8 +375,8 @@ body{font-family:"Manrope",ui-sans-serif,system-ui,sans-serif}
     </p>
     <div class="d-code">
       <button class="d-copy">Copy</button>
-      <pre><code><span class="d-tok-k">import</span> { ThemeProvider, ToastProvider, ModeRack, ModeToggle } <span class="d-tok-k">from</span> <span class="d-tok-s">'liquid-glass-ui'</span>;
-<span class="d-tok-k">import</span> <span class="d-tok-s">'liquid-glass-ui/styles.css'</span>;
+      <pre><code><span class="d-tok-k">import</span> { ThemeProvider, ToastProvider, ModeRack, ModeToggle } <span class="d-tok-k">from</span> <span class="d-tok-s">'glass-ui-react'</span>;
+<span class="d-tok-k">import</span> <span class="d-tok-s">'glass-ui-react/styles.css'</span>;
 
 <span class="d-tok-k">export function</span> <span class="d-tok-t">App</span>() {
   <span class="d-tok-k">return</span> (
@@ -2253,7 +2253,7 @@ body{font-family:"Manrope",ui-sans-serif,system-ui,sans-serif}
     </div>
     <div class="d-code">
       <button class="d-copy">Copy</button>
-      <pre><code><span class="d-tok-k">import type</span> { <span class="d-tok-t">Accent</span> } <span class="d-tok-k">from</span> <span class="d-tok-s">'liquid-glass-ui'</span>;
+      <pre><code><span class="d-tok-k">import type</span> { <span class="d-tok-t">Accent</span> } <span class="d-tok-k">from</span> <span class="d-tok-s">'glass-ui-react'</span>;
 
 <span class="d-tok-c">// accentStyle(accent) → { '--accent': 'var(--sleep)' }</span>
 &lt;<span class="d-tok-t">Switch</span> label=<span class="d-tok-s">"Silence calls"</span> accent=<span class="d-tok-s">"dnd"</span> /&gt;
@@ -2264,7 +2264,7 @@ body{font-family:"Manrope",ui-sans-serif,system-ui,sans-serif}
   </section>
 
   <footer style="margin-top:80px;padding-top:26px;border-top:1px solid var(--hair);font-size:13px;color:var(--ink-soft)">
-    <p style="margin:0 0 6px"><b style="color:var(--ink)">liquid-glass-ui</b> · MIT · 30 components, one stylesheet.</p>
+    <p style="margin:0 0 6px"><b style="color:var(--ink)">glass-ui-react</b> · MIT · 30 components, one stylesheet.</p>
     <p style="margin:0">Generated from the source in <code>src/</code>. Previews use the library's own CSS, so this page is always as current as the stylesheet beside it.</p>
   </footer>
 

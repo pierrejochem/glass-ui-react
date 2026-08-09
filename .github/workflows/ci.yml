@@ -81,10 +81,10 @@ jobs:
             test -f "_site/$f" || { echo "missing _site/$f"; exit 1; }
           done
           # A canonical pointing anywhere but the live site de-indexes the page
-          grep -q 'rel="canonical" href="https://pierrejochem.github.io/liquid-glass-ui/"' _site/index.html \
+          grep -q 'rel="canonical" href="https://pierrejochem.github.io/glass-ui-react/"' _site/index.html \
             || { echo "canonical link is missing or points elsewhere"; exit 1; }
           grep -q 'name="robots"' _site/index.html || { echo "missing robots meta"; exit 1; }
-          grep -q 'property="og:image" content="https://pierrejochem.github.io/liquid-glass-ui/og.png"' _site/index.html \
+          grep -q 'property="og:image" content="https://pierrejochem.github.io/glass-ui-react/og.png"' _site/index.html \
             || { echo "og:image is missing or points elsewhere"; exit 1; }
           grep -q 'application/ld+json' _site/index.html || { echo "missing structured data"; exit 1; }
           python3 -c "import xml.dom.minidom,sys; xml.dom.minidom.parse('_site/sitemap.xml')" \
@@ -115,7 +115,7 @@ jobs:
       - name: Assert the entry points exist in the tarball
         run: |
           npm pack
-          tar -tf liquid-glass-ui-*.tgz > files.txt
+          tar -tf glass-ui-react-*.tgz > files.txt
           for f in package/dist/index.js package/dist/index.cjs package/dist/index.d.ts package/dist/styles/liquid.css; do
             grep -qx "$f" files.txt || { echo "missing $f from the published tarball"; exit 1; }
           done

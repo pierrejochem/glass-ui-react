@@ -1,5 +1,5 @@
-/* liquid-glass-ui — one stylesheet, one material.
-   Import once at the root of your app:  import 'liquid-glass-ui/styles.css'
+/* glass-ui-react — one stylesheet, one material.
+   Import once at the root of your app:  import 'glass-ui-react/styles.css'
    Everything below is driven by the custom properties in :root / [data-theme]. */
 
 /* ============ tokens ============ */

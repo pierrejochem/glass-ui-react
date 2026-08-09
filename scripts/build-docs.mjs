@@ -13,8 +13,8 @@ const out = join(root, '_site');
 
 const SOURCE_HREF = '../src/styles/liquid.css';
 const PUBLISHED_HREF = './liquid.css';
-const SITE = 'https://pierrejochem.github.io/liquid-glass-ui/';
-const REPO = 'https://github.com/pierrejochem/liquid-glass-ui';
+const SITE = 'https://pierrejochem.github.io/glass-ui-react/';
+const REPO = 'https://github.com/pierrejochem/glass-ui-react';
 
 const fail = (message) => {
   console.error(`build-docs: ${message}`);
@@ -82,14 +82,14 @@ await writeFile(
 // summary they can read without parsing 150kB of documentation HTML
 await writeFile(
   join(out, 'llms.txt'),
-  `# liquid-glass-ui
+  `# glass-ui-react
 
 > A React component library built on one material: translucent glass that lights
 > up when it's on. 30 accessible components sharing a single visual rule —
 > things you press are raised, things you pour text into are recessed.
 
 - Version: ${version}
-- Install: npm install liquid-glass-ui
+- Install: npm install glass-ui-react
 - Docs: ${SITE}
 - Repository: ${REPO}
 - License: MIT
