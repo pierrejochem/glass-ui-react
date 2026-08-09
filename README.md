@@ -6,7 +6,7 @@ Every surface is see-through and blurs what's behind it. Things you press are ra
 things you pour text into are recessed. That one rule is what makes 30 components read
 as a single object rather than a pile of unrelated shapes.
 
-**[Read the docs →](https://your-org.github.io/liquid-glass-ui/)** — every component, prop and
+**[Read the docs →](https://pierrejochem.github.io/liquid-glass-ui/)** — every component, prop and
 type, with live previews.
 
 ```bash

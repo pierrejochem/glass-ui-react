@@ -54,7 +54,9 @@
     "vitest": "^2.1.8"
   },
   "keywords": ["react", "components", "ui", "glass", "design-system", "accessible"],
-  "repository": { "type": "git", "url": "git+https://github.com/your-org/liquid-glass-ui.git" },
+  "homepage": "https://pierrejochem.github.io/liquid-glass-ui/",
+  "repository": { "type": "git", "url": "git+https://github.com/pierrejochem/liquid-glass-ui.git" },
+  "bugs": { "url": "https://github.com/pierrejochem/liquid-glass-ui/issues" },
   "publishConfig": { "access": "public", "provenance": true },
   "engines": { "node": ">=18" }
 }

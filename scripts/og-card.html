@@ -1,0 +1,98 @@
+<!doctype html>
+<!-- Source for docs/og.png, the social card. Rasterise with:
+     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+       --headless --disable-gpu --hide-scrollbars \
+       --screenshot=docs/og.png --window-size=1200,630 \
+       file://$PWD/scripts/og-card.html
+
+     Kept in the repo so the card can be regenerated when the tagline or the
+     component count changes, rather than being an opaque binary nobody can edit.
+     Uses system fonts on purpose: no network fetch during rasterisation. -->
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1200px;height:630px;overflow:hidden}
+
+body{
+  /* the dark tokens straight out of liquid.css */
+  background:
+    radial-gradient(900px 520px at 18% -10%, rgba(91,149,255,.20), transparent 60%),
+    radial-gradient(700px 460px at 92% 108%, rgba(255,178,61,.14), transparent 62%),
+    linear-gradient(158deg, #1A1A1C 0%, #070708 72%);
+  color:#F2F1EF;
+  font-family:-apple-system, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* One pane of the material itself, so the card is made of the thing it sells.
+   It is also the layout box: everything sits in normal flow inside it, which
+   is what keeps the bottom row from sliding off the edge of the frame. */
+.plate{
+  position:absolute; inset:56px;
+  display:flex; flex-direction:column; justify-content:center;
+  padding:48px 62px;
+  border-radius:34px;
+  background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+  border:1px solid rgba(242,241,239,.16);
+  box-shadow:0 40px 90px rgba(0,0,0,.75), inset 0 1px 0 rgba(255,255,255,.17);
+}
+
+.brand{display:flex; align-items:center; gap:15px; margin-bottom:32px}
+.dot{
+  width:19px; height:19px; border-radius:50%;
+  background:#5B95FF;
+  box-shadow:0 0 26px 5px rgba(91,149,255,.65);
+}
+.brandname{
+  font-size:23px; font-weight:700; letter-spacing:-.01em;
+  color:rgba(242,241,239,.62);
+}
+
+h1{
+  font-size:78px; font-weight:800; letter-spacing:-.042em; line-height:1.02;
+  margin-bottom:26px;
+}
+
+p{
+  font-size:27px; line-height:1.45; font-weight:500;
+  color:rgba(242,241,239,.62);
+  max-width:26ch;
+}
+
+.meta{
+  display:flex; align-items:center; gap:13px; flex-wrap:nowrap;
+  margin-top:38px;
+  font-size:21px; font-weight:600; color:rgba(242,241,239,.52);
+  white-space:nowrap;
+}
+.chip{
+  display:flex; align-items:center; gap:9px;
+  padding:9px 17px; border-radius:999px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.16);
+  color:#F2F1EF;
+}
+.chip i{width:11px; height:11px; border-radius:50%; display:block}
+.sep{opacity:.5}
+</style>
+</head>
+<body>
+<div class="plate">
+  <div class="brand"><span class="dot"></span><span class="brandname">liquid-glass-ui</span></div>
+
+  <h1>Glass that lights&nbsp;up when it's&nbsp;on.</h1>
+
+  <p>A React component library built on one material.</p>
+
+  <div class="meta">
+    <span class="chip"><i style="background:#5B95FF;box-shadow:0 0 14px 3px rgba(91,149,255,.7)"></i>Sleep</span>
+    <span class="chip"><i style="background:#FF4033;box-shadow:0 0 14px 3px rgba(255,64,51,.7)"></i>Do not disturb</span>
+    <span class="chip"><i style="background:#FFB23D;box-shadow:0 0 14px 3px rgba(255,178,61,.7)"></i>Personal</span>
+    <span class="sep">·</span>
+    <span>30 components · TypeScript · MIT</span>
+  </div>
+</div>
+</body>
+</html>

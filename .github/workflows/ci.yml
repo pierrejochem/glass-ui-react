@@ -75,6 +75,22 @@ jobs:
           fi
           echo "docs site verified"
 
+      - name: Assert the site is crawlable
+        run: |
+          for f in robots.txt sitemap.xml llms.txt og.png; do
+            test -f "_site/$f" || { echo "missing _site/$f"; exit 1; }
+          done
+          # A canonical pointing anywhere but the live site de-indexes the page
+          grep -q 'rel="canonical" href="https://pierrejochem.github.io/liquid-glass-ui/"' _site/index.html \
+            || { echo "canonical link is missing or points elsewhere"; exit 1; }
+          grep -q 'name="robots"' _site/index.html || { echo "missing robots meta"; exit 1; }
+          grep -q 'property="og:image" content="https://pierrejochem.github.io/liquid-glass-ui/og.png"' _site/index.html \
+            || { echo "og:image is missing or points elsewhere"; exit 1; }
+          grep -q 'application/ld+json' _site/index.html || { echo "missing structured data"; exit 1; }
+          python3 -c "import xml.dom.minidom,sys; xml.dom.minidom.parse('_site/sitemap.xml')" \
+            || { echo "sitemap.xml is not well-formed"; exit 1; }
+          echo "crawlability verified"
+
       - name: Upload site for preview
         uses: actions/upload-artifact@v4
         with:
