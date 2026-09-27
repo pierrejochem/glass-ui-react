@@ -13,6 +13,12 @@
 <meta name="author" content="Pierre Jochem" />
 <meta name="theme-color" content="#070708" />
 
+<!-- Google shows a favicon beside every mobile result; without one it draws a
+     generic globe. SVG scales to every slot, the .ico is for older crawlers. -->
+<link rel="icon" href="./icon.svg" type="image/svg+xml" />
+<link rel="icon" href="./favicon.ico" sizes="32x32" />
+<link rel="apple-touch-icon" href="./icon.svg" />
+
 <!-- Link previews: chat apps and social cards read these, not <title> -->
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="glass-ui-react" />
@@ -42,7 +48,13 @@
   "runtimePlatform": "React",
   "license": "https://opensource.org/licenses/MIT",
   "author": { "@type": "Person", "name": "Pierre Jochem" },
-  "keywords": "react, component library, design system, glass, glassmorphism, ui, accessible, typescript"
+  "keywords": "react, component library, design system, glass, glassmorphism, ui, accessible, typescript",
+  "sameAs": [
+    "https://www.npmjs.com/package/glass-ui-react",
+    "https://github.com/pierrejochem/glass-ui-react"
+  ],
+  "isAccessibleForFree": true,
+  "applicationCategory": "DeveloperApplication"
 }
 </script>
 
