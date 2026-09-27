@@ -3,7 +3,7 @@
 A React component library built on one material: translucent glass that lights up when it's on.
 
 Every surface is see-through and blurs what's behind it. Things you press are raised;
-things you pour text into are recessed. That one rule is what makes 30 components read
+things you pour text into are recessed. That one rule is what makes 36 components read
 as a single object rather than a pile of unrelated shapes.
 
 **[Read the docs →](https://pierrejochem.github.io/glass-ui-react/)** — every component, prop and
