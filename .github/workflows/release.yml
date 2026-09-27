@@ -30,6 +30,13 @@ jobs:
           cache: npm
           registry-url: https://registry.npmjs.org
 
+      # Trusted publishing needs npm 11.5.1 or newer to exchange the Actions
+      # OIDC token for a short-lived registry credential. Node 22 still bundles
+      # npm 10, so the runner's npm is upgraded rather than the Node version,
+      # which would change what the gate below runs against.
+      - name: Upgrade npm for trusted publishing
+        run: npm install -g npm@latest
+
       - name: Install
         run: npm ci
 
@@ -58,11 +65,12 @@ jobs:
           fi
           echo "publishing $PKG"
 
+      # Authentication is the OIDC exchange configured as a trusted publisher on
+      # npm, so there is no token here. Provenance is attached automatically in
+      # that flow; id-token: write above is what makes it possible.
       - name: Publish
         if: ${{ github.event_name == 'push' || inputs.dry-run == false }}
-        run: npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --access public
 
       - name: Dry run
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.dry-run }}
