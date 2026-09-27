@@ -68,11 +68,19 @@
   },
   "keywords": [
     "react",
+    "react-components",
     "components",
+    "component-library",
     "ui",
+    "ui-components",
+    "ui-library",
     "glass",
+    "glass-ui",
+    "glassmorphism",
     "design-system",
-    "accessible"
+    "accessible",
+    "accessibility",
+    "typescript"
   ],
   "homepage": "https://pierrejochem.github.io/glass-ui-react/",
   "repository": {

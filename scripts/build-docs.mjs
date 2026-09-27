@@ -53,6 +53,11 @@ await cp(join(root, 'src/styles/liquid.css'), join(out, 'liquid.css'));
 // serves an image — a 404 here is worse than having no card at all
 await cp(join(root, 'docs/og.png'), join(out, 'og.png'));
 
+// 2c. the favicons. Search results show one beside every mobile hit, and a
+// missing file is a 404 on the most-requested path on the whole site
+await cp(join(root, 'docs/icon.svg'), join(out, 'icon.svg'));
+await cp(join(root, 'docs/favicon.ico'), join(out, 'favicon.ico'));
+
 // 3. Pages runs Jekyll by default, which would swallow anything underscored
 await writeFile(join(out, '.nojekyll'), '');
 
