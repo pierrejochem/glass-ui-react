@@ -85,7 +85,7 @@ await writeFile(
   `# glass-ui-react
 
 > A React component library built on one material: translucent glass that lights
-> up when it's on. 30 accessible components sharing a single visual rule —
+> up when it's on. 36 accessible components sharing a single visual rule —
 > things you press are raised, things you pour text into are recessed.
 
 - Version: ${version}

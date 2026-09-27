@@ -5,6 +5,15 @@
        --screenshot=docs/og.png --window-size=1200,630 \
        file://$PWD/scripts/og-card.html
 
+     On Linux the binary is on PATH, so the same flags apply:
+     google-chrome \
+       --headless --disable-gpu --hide-scrollbars \
+       --screenshot=docs/og.png --window-size=1200,630 \
+       file://$PWD/scripts/og-card.html
+
+     Run it from the repository root either way: --screenshot writes to a
+     path relative to the working directory.
+
      Kept in the repo so the card can be regenerated when the tagline or the
      component count changes, rather than being an opaque binary nobody can edit.
      Uses system fonts on purpose: no network fetch during rasterisation. -->
@@ -91,7 +100,7 @@ p{
     <span class="chip"><i style="background:#FF4033;box-shadow:0 0 14px 3px rgba(255,64,51,.7)"></i>Do not disturb</span>
     <span class="chip"><i style="background:#FFB23D;box-shadow:0 0 14px 3px rgba(255,178,61,.7)"></i>Personal</span>
     <span class="sep">·</span>
-    <span>30 components · TypeScript · MIT</span>
+    <span>36 components · TypeScript · MIT</span>
   </div>
 </div>
 </body>
